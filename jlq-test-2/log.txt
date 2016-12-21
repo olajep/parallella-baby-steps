@@ -1,0 +1,788 @@
+e_set_loader_verbosity(): setting loader verbosity to 4.
+e_init(): HDF ENV = /opt/adapteva/esdk/bsps/current/platform.hdf
+e_init(): opening HDF /opt/adapteva/esdk/bsps/current/platform.hdf
+ee_parse_simple_hdf(): line 1: // Platform
+ee_parse_simple_hdf(): comment
+ee_parse_simple_hdf(): line 2: // Parallella/1GB/E16G3
+ee_parse_simple_hdf(): comment
+ee_parse_simple_hdf(): line 3: PLATFORM_VERSION PARALLELLA1601
+ee_parse_simple_hdf(): platform version = PARALLELLA1601
+ee_parse_simple_hdf(): line 5: NUM_CHIPS 1
+ee_parse_simple_hdf(): number of chips = 1
+ee_parse_simple_hdf(): line 6: CHIP E16G301
+ee_parse_simple_hdf(): processing chip #0, version = "E16G301"
+ee_parse_simple_hdf(): chip version = E16G301
+ee_parse_simple_hdf(): line 7: CHIP_ROW 32
+ee_parse_simple_hdf(): chip row = 32
+ee_parse_simple_hdf(): line 8: CHIP_COL 8
+ee_parse_simple_hdf(): chip col = 8
+ee_parse_simple_hdf(): line 10: NUM_EXT_MEMS 1
+ee_parse_simple_hdf(): number of ext. memory segments = 1
+ee_parse_simple_hdf(): line 11: EMEM ext-DRAM
+ee_parse_simple_hdf(): processing external memory segment #0
+ee_parse_simple_hdf(): line 12: EMEM_BASE_ADDRESS 0x8e000000
+ee_parse_simple_hdf(): base addr. of ext. mem. segment = 0x8e000000
+ee_parse_simple_hdf(): line 13: EMEM_EPI_BASE 0x8e000000
+ee_parse_simple_hdf(): base addr. of ext. mem. segment (device side)= 0x8e000000
+ee_parse_simple_hdf(): line 14: EMEM_SIZE 0x02000000
+ee_parse_simple_hdf(): size of ext. mem. segment = 2000000
+ee_parse_simple_hdf(): line 15: EMEM_TYPE RDWR
+ee_parse_simple_hdf(): type of ext. mem. segment = 0
+ee_set_platform_params(): found platform version "PARALLELLA1601"
+ee_set_chip_params(): found chip version "E16G301"
+e_init(): platform.(row,col)	  = (32,8)
+e_init(): platform.(rows,cols) = (4,4)
+e_alloc(): allocating EMEM buffer at offset 0x01000000
+e_alloc(): mbuf.phy_base = 0x8f000000, mbuf.ephy_base = 0x8f000000, mbuf.base = 0x00000000, mbuf.size = 0x00001000
+e_open(): platform.(row,col)=(32,8)
+e_open(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(0,0), num_cores=16
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(0,0), CoreID=0x808
+e_open(): group.(row,col),id = (32,8), 0x808
+e_open(): group.(rows,cols),numcores = (4,4), 16
+e_open(): opening core (0,0)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(0,0), CoreID=0x808
+e_open(): core (0,0), CoreID = 0x808
+e_open(): mems.phy_base = 0x80800000, mems.base = 0xb6f54000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x808f0000, regs.base = 0xb6f28000, regs.size = 0x00001000
+e_open(): opening core (0,1)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(0,1), CoreID=0x809
+e_open(): core (0,1), CoreID = 0x809
+e_open(): mems.phy_base = 0x80900000, mems.base = 0xb6f20000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x809f0000, regs.base = 0xb6f1f000, regs.size = 0x00001000
+e_open(): opening core (0,2)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(0,2), CoreID=0x80a
+e_open(): core (0,2), CoreID = 0x80a
+e_open(): mems.phy_base = 0x80a00000, mems.base = 0xb6c34000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x80af0000, regs.base = 0xb6f1e000, regs.size = 0x00001000
+e_open(): opening core (0,3)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(0,3), CoreID=0x80b
+e_open(): core (0,3), CoreID = 0x80b
+e_open(): mems.phy_base = 0x80b00000, mems.base = 0xb6c2c000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x80bf0000, regs.base = 0xb6f1d000, regs.size = 0x00001000
+e_open(): opening core (1,0)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(1,0), CoreID=0x848
+e_open(): core (1,0), CoreID = 0x848
+e_open(): mems.phy_base = 0x84800000, mems.base = 0xb6c24000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x848f0000, regs.base = 0xb6f1c000, regs.size = 0x00001000
+e_open(): opening core (1,1)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(1,1), CoreID=0x849
+e_open(): core (1,1), CoreID = 0x849
+e_open(): mems.phy_base = 0x84900000, mems.base = 0xb6c1c000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x849f0000, regs.base = 0xb6f1b000, regs.size = 0x00001000
+e_open(): opening core (1,2)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(1,2), CoreID=0x84a
+e_open(): core (1,2), CoreID = 0x84a
+e_open(): mems.phy_base = 0x84a00000, mems.base = 0xb6c14000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x84af0000, regs.base = 0xb6f1a000, regs.size = 0x00001000
+e_open(): opening core (1,3)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(1,3), CoreID=0x84b
+e_open(): core (1,3), CoreID = 0x84b
+e_open(): mems.phy_base = 0x84b00000, mems.base = 0xb6c0c000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x84bf0000, regs.base = 0xb6f19000, regs.size = 0x00001000
+e_open(): opening core (2,0)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(2,0), CoreID=0x888
+e_open(): core (2,0), CoreID = 0x888
+e_open(): mems.phy_base = 0x88800000, mems.base = 0xb6c04000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x888f0000, regs.base = 0xb6c03000, regs.size = 0x00001000
+e_open(): opening core (2,1)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(2,1), CoreID=0x889
+e_open(): core (2,1), CoreID = 0x889
+e_open(): mems.phy_base = 0x88900000, mems.base = 0xb6bfb000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x889f0000, regs.base = 0xb6bfa000, regs.size = 0x00001000
+e_open(): opening core (2,2)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(2,2), CoreID=0x88a
+e_open(): core (2,2), CoreID = 0x88a
+e_open(): mems.phy_base = 0x88a00000, mems.base = 0xb6bf2000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x88af0000, regs.base = 0xb6bf1000, regs.size = 0x00001000
+e_open(): opening core (2,3)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(2,3), CoreID=0x88b
+e_open(): core (2,3), CoreID = 0x88b
+e_open(): mems.phy_base = 0x88b00000, mems.base = 0xb6be9000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x88bf0000, regs.base = 0xb6be8000, regs.size = 0x00001000
+e_open(): opening core (3,0)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(3,0), CoreID=0x8c8
+e_open(): core (3,0), CoreID = 0x8c8
+e_open(): mems.phy_base = 0x8c800000, mems.base = 0xb6be0000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x8c8f0000, regs.base = 0xb6bdf000, regs.size = 0x00001000
+e_open(): opening core (3,1)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(3,1), CoreID=0x8c9
+e_open(): core (3,1), CoreID = 0x8c9
+e_open(): mems.phy_base = 0x8c900000, mems.base = 0xb6bd7000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x8c9f0000, regs.base = 0xb6bd6000, regs.size = 0x00001000
+e_open(): opening core (3,2)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(3,2), CoreID=0x8ca
+e_open(): core (3,2), CoreID = 0x8ca
+e_open(): mems.phy_base = 0x8ca00000, mems.base = 0xb6bce000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x8caf0000, regs.base = 0xb6bcd000, regs.size = 0x00001000
+e_open(): opening core (3,3)
+ee_get_id_from_coords(): dev.(row,col,rows,cols)=(32,8,4,4), (row,col)=(3,3), CoreID=0x8cb
+e_open(): core (3,3), CoreID = 0x8cb
+e_open(): mems.phy_base = 0x8cb00000, mems.base = 0xb6bc5000, mems.size = 0x00008000
+e_open(): regs.phy_base = 0x8cbf0000, regs.base = 0xb6bc4000, regs.size = 0x00001000
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6f54000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6f54000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6f20000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6f20000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c34000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c34000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c2c000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c2c000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c24000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c24000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c1c000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c1c000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c14000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c14000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c0c000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c0c000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c04000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c04000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bfb000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bfb000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bf2000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bf2000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6be9000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6be9000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6be0000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6be0000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bd7000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bd7000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bce000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bce000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bc5000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bc5000, size=32768
+ee_reset_group(): halting cores...
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f28448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f1f448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f1e448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f1d448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f1c448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f1b448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f1a448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6f19448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6c03448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6bfa448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6bf1448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6be8448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6bdf448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6bd6448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6bcd448
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000448, pto=0xb6bc4448
+ee_reset_group(): halting cores...
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f2840c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1f40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1e40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1d40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1c40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1b40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1a40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6f1940c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6c0340c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6bfa40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6bf140c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6be840c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6bdf40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6bd640c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6bcd40c
+ee_read_reg(): reading from from_addr=0x000f040c, pfrom=0xb6bc440c
+ee_reset_group(): pausing DMAs.
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f28400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f1f400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f1e400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f1d400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f1c400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f1b400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f1a400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6f19400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6c03400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6bfa400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6bf1400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6be8400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6bdf400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6bd6400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6bcd400
+e_write(): detected EPI_GROUP object.
+ee_write_reg(): writing to to_addr=0x00000400, pto=0xb6bc4400
+ee_reset_group(): resetting cores...
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f2870c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f2870c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1f70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1f70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1e70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1e70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1d70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1d70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1c70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1c70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1b70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1b70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1a70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1a70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1970c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6f1970c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6c0370c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6c0370c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bfa70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bfa70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bf170c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bf170c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6be870c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6be870c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bdf70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bdf70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bd670c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bd670c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bcd70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bcd70c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bc470c
+ee_write_reg(): writing to to_addr=0x0000070c, pto=0xb6bc470c
+ee_reset_group(): done.
+e_alloc(): allocating EMEM buffer at offset 0x00000000
+e_alloc(): mbuf.phy_base = 0x8e000000, mbuf.ephy_base = 0x8e000000, mbuf.base = 0xbe9e5d24, mbuf.size = 0x02000000
+e_load_group(): loading ELF file e_dump_prog.elf ...
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6f54000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6f20000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c34000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c2c000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c24000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c1c000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c14000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c0c000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6c04000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bfb000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bf2000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6be9000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6be0000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bd7000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bce000, size=32768
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000000, pto=0xb6bc5000, size=32768
+ee_process_elf(): copying the data (4 bytes) (local) to core (0,0)
+LOADING((local)). row=0 col=0 dst=0xb6f54000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (0,0)
+LOADING((local)). row=0 col=0 dst=0xb6f54028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (0,0)
+LOADING((local)). row=0 col=0 dst=0xb6f54100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=0 col=0 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=0 col=0 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6f54028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6f54050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6f54058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (0,1)
+LOADING((local)). row=0 col=1 dst=0xb6f20000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (0,1)
+LOADING((local)). row=0 col=1 dst=0xb6f20028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (0,1)
+LOADING((local)). row=0 col=1 dst=0xb6f20100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=0 col=1 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=0 col=1 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6f20028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6f20050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6f20058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (0,2)
+LOADING((local)). row=0 col=2 dst=0xb6c34000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (0,2)
+LOADING((local)). row=0 col=2 dst=0xb6c34028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (0,2)
+LOADING((local)). row=0 col=2 dst=0xb6c34100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=0 col=2 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=0 col=2 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c34028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c34050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c34058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (0,3)
+LOADING((local)). row=0 col=3 dst=0xb6c2c000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (0,3)
+LOADING((local)). row=0 col=3 dst=0xb6c2c028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (0,3)
+LOADING((local)). row=0 col=3 dst=0xb6c2c100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=0 col=3 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=0 col=3 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c2c028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c2c050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c2c058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (1,0)
+LOADING((local)). row=1 col=0 dst=0xb6c24000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (1,0)
+LOADING((local)). row=1 col=0 dst=0xb6c24028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (1,0)
+LOADING((local)). row=1 col=0 dst=0xb6c24100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=1 col=0 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=1 col=0 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c24028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c24050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c24058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (1,1)
+LOADING((local)). row=1 col=1 dst=0xb6c1c000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (1,1)
+LOADING((local)). row=1 col=1 dst=0xb6c1c028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (1,1)
+LOADING((local)). row=1 col=1 dst=0xb6c1c100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=1 col=1 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=1 col=1 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c1c028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c1c050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c1c058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (1,2)
+LOADING((local)). row=1 col=2 dst=0xb6c14000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (1,2)
+LOADING((local)). row=1 col=2 dst=0xb6c14028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (1,2)
+LOADING((local)). row=1 col=2 dst=0xb6c14100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=1 col=2 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=1 col=2 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c14028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c14050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c14058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (1,3)
+LOADING((local)). row=1 col=3 dst=0xb6c0c000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (1,3)
+LOADING((local)). row=1 col=3 dst=0xb6c0c028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (1,3)
+LOADING((local)). row=1 col=3 dst=0xb6c0c100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=1 col=3 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=1 col=3 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c0c028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c0c050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c0c058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (2,0)
+LOADING((local)). row=2 col=0 dst=0xb6c04000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (2,0)
+LOADING((local)). row=2 col=0 dst=0xb6c04028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (2,0)
+LOADING((local)). row=2 col=0 dst=0xb6c04100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=2 col=0 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=2 col=0 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6c04028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6c04050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6c04058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (2,1)
+LOADING((local)). row=2 col=1 dst=0xb6bfb000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (2,1)
+LOADING((local)). row=2 col=1 dst=0xb6bfb028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (2,1)
+LOADING((local)). row=2 col=1 dst=0xb6bfb100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=2 col=1 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=2 col=1 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6bfb028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6bfb050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6bfb058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (2,2)
+LOADING((local)). row=2 col=2 dst=0xb6bf2000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (2,2)
+LOADING((local)). row=2 col=2 dst=0xb6bf2028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (2,2)
+LOADING((local)). row=2 col=2 dst=0xb6bf2100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=2 col=2 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=2 col=2 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6bf2028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6bf2050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6bf2058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (2,3)
+LOADING((local)). row=2 col=3 dst=0xb6be9000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (2,3)
+LOADING((local)). row=2 col=3 dst=0xb6be9028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (2,3)
+LOADING((local)). row=2 col=3 dst=0xb6be9100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=2 col=3 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=2 col=3 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6be9028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6be9050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6be9058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (3,0)
+LOADING((local)). row=3 col=0 dst=0xb6be0000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (3,0)
+LOADING((local)). row=3 col=0 dst=0xb6be0028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (3,0)
+LOADING((local)). row=3 col=0 dst=0xb6be0100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=3 col=0 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=3 col=0 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6be0028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6be0050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6be0058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (3,1)
+LOADING((local)). row=3 col=1 dst=0xb6bd7000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (3,1)
+LOADING((local)). row=3 col=1 dst=0xb6bd7028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (3,1)
+LOADING((local)). row=3 col=1 dst=0xb6bd7100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=3 col=1 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=3 col=1 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6bd7028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6bd7050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6bd7058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (3,2)
+LOADING((local)). row=3 col=2 dst=0xb6bce000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (3,2)
+LOADING((local)). row=3 col=2 dst=0xb6bce028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (3,2)
+LOADING((local)). row=3 col=2 dst=0xb6bce100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=3 col=2 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=3 col=2 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6bce028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6bce050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6bce058, size=16
+ee_process_elf(): copying the data (4 bytes) (local) to core (3,3)
+LOADING((local)). row=3 col=3 dst=0xb6bc5000 src=0xb4bb3000 sz=4 p_vaddr=0000 ((nil)).
+ee_process_elf(): copying the data (64 bytes) (local) to core (3,3)
+LOADING((local)). row=3 col=3 dst=0xb6bc5028 src=0xb4bb3028 sz=64 p_vaddr=0028 (0x28).
+ee_process_elf(): copying the data (776 bytes) (local) to core (3,3)
+LOADING((local)). row=3 col=3 dst=0xb6bc5100 src=0xb4bb3100 sz=776 p_vaddr=0100 (0x100).
+ee_process_elf(): copying the data (1500 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8e000000) to physical (0xb4bc4000)...
+LOADING((external)). row=3 col=3 dst=0xb4bc4000 src=0xb4bbb000 sz=1500 p_vaddr=8e000000 (0x8e000000).
+ee_process_elf(): copying the data (4 bytes) (external) to external memory.
+ee_process_elf(): converting virtual (0x8f000000) to physical (0xb5bc4000)...
+LOADING((external)). row=3 col=3 dst=0xb5bc4000 src=0xb4bc3000 sz=4 p_vaddr=8f000000 (0x8f000000).
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000028, pto=0xb6bc5028, size=40
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000050, pto=0xb6bc5050, size=8
+e_write(): detected EPI_GROUP object.
+ee_write_buf(): writing to to_addr=0x00000058, pto=0xb6bc5058, size=16
+e_load_group(): done loading.
+FINISHED LOADING GROUP
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6f54000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f2842c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6f54000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6f20000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1f42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6f20000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c34000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1e42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c34000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c2c000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1d42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c2c000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c24000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1c42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c24000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c1c000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1b42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c1c000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c14000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1a42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c14000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c0c000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6f1942c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c0c000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c04000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6c0342c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6c04000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bfb000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6bfa42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bfb000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bf2000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6bf142c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bf2000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6be9000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6be842c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6be9000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6be0000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6bdf42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6be0000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bd7000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6bd642c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bd7000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bce000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6bcd42c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bce000, size=32768
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bc5000, size=32768
+e_write(): detected EXT_MEM object.
+_e_default_start_group(): SYNC (0xf042c) to workgroup...
+ee_write_reg(): writing to to_addr=0x0000042c, pto=0xb6bc442c
+_e_default_start_group(): done.
+e_read(): detected EXT_MEM object.
+ee_mread_buf(): reading from from_addr=0xb6f5c000, offset=0x00000000, size=4, map_size=0x1000
+e_read(): detected EPI_GROUP object.
+ee_read_buf(): reading from from_addr=0x00000000, pfrom=0xb6bc5000, size=32768
+e_shm_finalize(): teardown complete

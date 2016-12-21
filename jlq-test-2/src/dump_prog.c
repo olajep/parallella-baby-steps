@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include <e-hal.h>
+#include "jlq-loader.h"
 
 #define f_nm_sz   1024
 #define buff_sz   (4096)
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 	memset(before, 0, mem_32K);
 	memset(after, 0, mem_32K);
 	
-	//e_set_loader_verbosity(H_D0);
+	je_set_loader_verbosity(H_D4);
 	//e_set_host_verbosity(H_D0);
 
 	// initialize system, read platform params from
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
 			
 			e_read(&dev, row, col, 0x0, after, mem_32K);
 			sprintf(f_nm, "mem_inited_row%d_col%d.dat", row, col);
-			write_file(f_nm, after, mem_32K, 1);
+			//write_file(f_nm, after, mem_32K, 1);
 		}
 	}
 	
@@ -68,8 +69,10 @@ int main(int argc, char *argv[])
 	e_reset_group(&dev);
 
 	// Load the device program onto all the eCores
-	e_load_group("e_dump_prog.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
+	je_load_group("e_dump_prog.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 
+	if(e_load_verbose >= L_D1) { fprintf(diag_fd, "FINISHED LOADING GROUP\n"); }
+	
 	for (row=0; row<platform.rows; row++){
 		for (col=0; col<platform.cols; col++){
 			memset(before, 0, mem_32K);
@@ -102,12 +105,14 @@ int main(int argc, char *argv[])
 			
 			// read local mem after.
 			e_read(&dev, row, col, 0x0, after, mem_32K);
-			
-			sprintf(f_nm, "mem_before_row%d_col%d.dat", row, col);
-			write_file(f_nm, before, mem_32K, 1);
-			
-			sprintf(f_nm, "mem_after_row%d_col%d.dat", row, col);
-			write_file(f_nm, after, mem_32K, 1);
+
+			if((row == 0) && (col == 0)){
+				sprintf(f_nm, "mem_before_row%d_col%d.dat", row, col);
+				write_file(f_nm, before, mem_32K, 1);
+				
+				sprintf(f_nm, "mem_after_row%d_col%d.dat", row, col);
+				write_file(f_nm, after, mem_32K, 1);
+			}
 		}
 	}
 	
