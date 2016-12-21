@@ -1,32 +1,3 @@
-/*
-  hello_world.c
-
-  Copyright (C) 2012 Adapteva, Inc.
-  Contributed by Yaniv Sapir <yaniv@adapteva.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program, see the file COPYING.  If not, see
-  <http://www.gnu.org/licenses/>.
-*/
-
-// This is the HOST side of the Hello World example.
-// The program initializes the Epiphany system,
-// randomly draws an eCore and then loads and launches
-// the device program on that eCore. It then reads the
-// shared external memory buffer for the core's output
-// message.
-
-// Last update: 2016 dec 19. (JLQ).
 
 #include <fcntl.h>
 #include <stdlib.h>
@@ -45,6 +16,9 @@
 
 int	write_file(char* the_pth, char* the_data, long the_sz, int write_once);
 
+char before[mem_32K];
+char after[mem_32K];
+
 int main(int argc, char *argv[])
 {
 	unsigned row, col, coreid;
@@ -54,8 +28,8 @@ int main(int argc, char *argv[])
 	char emsg[buff_sz];
 	char f_nm[f_nm_sz];
 	
-	char* before = (char*)malloc(mem_32K);
-	char* after = (char*)malloc(mem_32K);
+	//char* before = (char*)malloc(mem_32K);
+	//char* after = (char*)malloc(mem_32K);
 
 	e_coreid_t the_coreid;
 	
@@ -137,8 +111,8 @@ int main(int argc, char *argv[])
 		}
 	}
 	
-	free(before);
-	free(after);
+	//free(before);
+	//free(after);
 
 	// Close the workgroup
 	e_close(&dev);

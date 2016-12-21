@@ -1,41 +1,11 @@
-/*
-  e_hello_world.c
-
-  Copyright (C) 2012 Adapteva, Inc.
-  Contributed by Yaniv Sapir <yaniv@adapteva.com>
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program, see the file COPYING.  If not, see
-  <http://www.gnu.org/licenses/>.
-*/
-
-// This is the DEVICE side of the Hello World example.
-// The host may load this program to any eCore. When
-// launched, the program queries the CoreID and prints
-// a message identifying itself to the shared external
-// memory buffer.
-
-// Last update: 2016 dec 19. (JLQ).
 
 #include "e_lib.h"
 
-#define buff_sz   (4096)
-
-//char outbuf[buff_sz] SECTION("shared_dram");
-e_coreid_t outbuf SECTION("shared_dram");
+e_coreid_t the_core_id SECTION("shared_dram");
 
 void main(void) {
-	e_coreid_t*	coreid = (e_coreid_t*)outbuf;
-	*coreid = e_get_coreid();
+	//the_core_id = 0xaabb;
+	//the_core_id = e_get_coreid();
+	__asm__ __volatile__ ("movfs %0, coreid" : "=r" (the_core_id));
 }
 
