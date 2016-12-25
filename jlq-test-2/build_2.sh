@@ -2,8 +2,6 @@
 
 # Last update: 2016 dec 19. (JLQ).
 
-set -e
-
 ESDK=${EPIPHANY_HOME}
 ELIBS="-L ${ESDK}/tools/host/lib"
 EINCS="-I ${ESDK}/tools/host/include"
@@ -13,9 +11,15 @@ SCRIPT=$(readlink -f "$0")
 EXEPATH=$(dirname "$SCRIPT")
 cd $EXEPATH
 
+PWD_VAL=`pwd`
+echo "PWD="$PWD_VAL
+echo "EXEPATH="$EXEPATH
+
 # clean all
 rm -rf bin
 rm src/*.o
+
+set -e
 
 # Create the binaries directory
 mkdir bin/
@@ -43,8 +47,9 @@ ${CROSS_COMPILE}gcc -c ${PROG_NM}.c ${EINCS} ${ELIBS}
 cd ..
 ${CROSS_COMPILE}gcc src/jlq-loader.o src/${PROG_NM}.o -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le-hal 
 
-# Build DEVICE side program
-e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib
+# Build DEVICE side program -ffreesstanding -nostdlib -nostartfiles
+e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib 
+# e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib -nostdlib -nostartfiles
 
 
 

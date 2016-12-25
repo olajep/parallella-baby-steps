@@ -7,18 +7,11 @@
 #include <unistd.h>
 
 #include <e-hal.h>
-#include "jlq-loader.h"
+#include <e-loader.h>
 
 #define f_nm_sz   1024
 #define buff_sz   (4096)
 #define buff_offset (0x01000000)
-
-#define mem_32K   32768
-
-int	write_file(char* the_pth, char* the_data, long the_sz, int write_once);
-
-char before[mem_32K];
-char after[mem_32K];
 
 int main(int argc, char *argv[])
 {
@@ -29,16 +22,9 @@ int main(int argc, char *argv[])
 	char emsg[buff_sz];
 	char f_nm[f_nm_sz];
 	
-	//char* before = (char*)malloc(mem_32K);
-	//char* after = (char*)malloc(mem_32K);
-
 	e_coreid_t the_coreid;
 	
-	memset(before, 0, mem_32K);
-	memset(after, 0, mem_32K);
-	
-	je_set_loader_verbosity(H_D1);
-	//e_set_host_verbosity(H_D0);
+	e_set_loader_verbosity(H_D0);
 
 	// initialize system, read platform params from
 	// default HDF. Then, reset the platform and
@@ -54,33 +40,14 @@ int main(int argc, char *argv[])
     	// Open a workgroup
 	e_open(&dev, 0, 0, platform.rows, platform.cols);
 
-	// Reset workgroup local mem
-	for (row=0; row < platform.rows; row++){
-		for (col=0; col < platform.cols; col++){
-			e_write(&dev, row, col, 0x0, before, mem_32K);
-			
-			e_read(&dev, row, col, 0x0, after, mem_32K);
-			sprintf(f_nm, "mem_inited_row%d_col%d.dat", row, col);
-			//write_file(f_nm, after, mem_32K, 1);
-		}
-	}
-	
 	// Reset the workgroup
 	e_reset_group(&dev);
 
 	// Load the device program onto all the eCores
-	je_load_group("e_dump_prog.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
+	e_load_group("e_prog_3.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 
-	if(e_load_verbose >= L_D1) { fprintf(diag_fd, "FINISHED LOADING GROUP\n"); }
-	
 	for (row=0; row<platform.rows; row++){
 		for (col=0; col<platform.cols; col++){
-			memset(before, 0, mem_32K);
-			memset(after, 0, mem_32K);
-			
-			// read local mem before.
-			e_read(&dev, row, col, 0x0, before, mem_32K);
-			
 			// clear shared buffer.
 			memset(emsg, 0, buff_sz);
 			e_write(&emem, 0, 0, 0x0000, emsg, buff_sz);
@@ -101,24 +68,10 @@ int main(int argc, char *argv[])
 			sprintf(emsg, "Hello World from core 0x%03x! \n", the_coreid);
 
 			// Print the message and close the workgroup.
-			printf("%s\n", emsg);
-			
-			// read local mem after.
-			e_read(&dev, row, col, 0x0, after, mem_32K);
-
-			if((row == 0) && (col == 0)){
-				sprintf(f_nm, "mem_before_row%d_col%d.dat", row, col);
-				write_file(f_nm, before, mem_32K, 1);
-				
-				sprintf(f_nm, "mem_after_row%d_col%d.dat", row, col);
-				write_file(f_nm, after, mem_32K, 1);
-			}
+			printf("%s\n", emsg);	
 		}
 	}
 	
-	//free(before);
-	//free(after);
-
 	// Close the workgroup
 	e_close(&dev);
 	
@@ -128,26 +81,5 @@ int main(int argc, char *argv[])
 	e_finalize();
 
 	return 0;
-}
-
-int
-write_file(char* the_pth, char* the_data, long the_sz, int write_once){
-	int fd = 0;
-	
-	if(write_once){
-		// old perm 0444
-		if((fd = open(the_pth, O_RDWR|O_CREAT|O_EXCL, 0777)) == -1){
-			return 0;
-		}
-	} else {
-		if((fd = creat(the_pth, 0777)) == -1){
-			return 0;
-		}
-	}
-
-	write(fd, the_data, the_sz);
-	close(fd);
-
-	return 1;
 }
 
