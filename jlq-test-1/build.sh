@@ -35,8 +35,5 @@ ${CROSS_COMPILE}gcc src/hello_world.c -o bin/hello_world.elf ${EINCS} ${ELIBS} -
 # Build DEVICE side program
 e-gcc -T ${ELDF} src/e_hello_world.c -o bin/e_hello_world.elf -le-lib
 
-
-
-
-
+e-objdump -D bin/e_hello_world.elf > code1.s
 
