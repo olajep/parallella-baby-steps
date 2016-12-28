@@ -51,8 +51,7 @@ ${CROSS_COMPILE}gcc src/jlq-loader.o src/${PROG_NM}.o -o bin/${PROG_NM}.elf ${EI
 e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib 
 # e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib -nostdlib -nostartfiles
 
-
-
+e-objdump -D bin/e_${PROG_NM}.elf > code2.s
 
 
 

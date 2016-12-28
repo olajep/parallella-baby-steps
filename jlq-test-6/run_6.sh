@@ -5,7 +5,7 @@ set -e
 SCRIPT=$(readlink -f "$0")
 EXEPATH=$(dirname "$SCRIPT")
 
+PROG_NM=prog_6
 
 cd $EXEPATH/bin
-./max_load_test.elf
-
+./${PROG_NM}.elf 

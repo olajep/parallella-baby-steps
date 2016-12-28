@@ -2,7 +2,7 @@
 	.balign 4
 	.global	_start
 	.global	normal_start
-.section IVT_RESET
+.section IVT_RESET, "ax",@progbits
 	_start:
 	b normal_start
 .section .reserved_crt0
