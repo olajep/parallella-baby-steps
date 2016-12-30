@@ -5,7 +5,7 @@ bin/e_prog_6.elf:     file format elf32-epiphany
 Disassembly of section ivt_reset:
 
 00000000 <_start>:
-   0:	00e8 0000 	b 0 <_start>
+   0:	80e8 0000 	b 100 <normal_start>
 
 Disassembly of section workgroup_cfg:
 
@@ -36,7 +36,7 @@ Disassembly of section .text:
  108:	e00b 2002 	mov fp,0x0
  10c:	251f 0032 	movfs r1,coreid
  110:	000b 0002 	mov r0,0x0
- 114:	000b 1002 	movt r0,0x0
+ 114:	000b 18f2 	movt r0,0x8f00
  118:	2054      	str r1,[r0]
  11a:	01a2      	nop
  11c:	0fe2      	trap 0x3

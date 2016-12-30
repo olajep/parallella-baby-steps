@@ -36,7 +36,9 @@ case $(uname -p) in
 esac
 fi
 
-PROG_NM=prog_6
+# ${E_LIBS} ${E_LIBS_2} -lc -lepiphany -lgcc -lg -le-lib 
+
+PROG_NM=prog_7
 
 # Build HOST side application
 ${CROSS_COMPILE}gcc src/${PROG_NM}.c -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le-hal -le-loader 
@@ -45,14 +47,12 @@ ${CROSS_COMPILE}gcc src/${PROG_NM}.c -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le
 # e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib 
 
 cd src
+e-gcc -c e_${PROG_NM}.c -nostdlib -nostartfiles
 e-gcc -c e_start.s -nostdlib -nostartfiles
 cd ..
-# e-gcc -T ${ELDF} src/e_${PROG_NM}.o -o bin/e_${PROG_NM}.elf -le-lib 
-# e-ld -T ${ELDF} src/e_${PROG_NM}.o src/e_start.o -o bin/e_${PROG_NM}.elf ${E_LIBS} -le-lib 
-# echo "E_LIBS="${E_LIBS} // -lc -lepiphany -lgcc -lg -le-lib 
-e-ld -r -T ${ELDF} src/e_start.o -o bin/e_${PROG_NM}.elf ${E_LIBS} ${E_LIBS_2} --strip-debug
+e-ld -T ${ELDF} src/e_${PROG_NM}.o src/e_start.o -o bin/e_${PROG_NM}.elf ${E_LIBS} ${E_LIBS_2} -le-lib --strip-debug
 
 # e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib 
-e-objdump -D bin/e_${PROG_NM}.elf > code6.s
+e-objdump -D bin/e_${PROG_NM}.elf > code7.s
 
 

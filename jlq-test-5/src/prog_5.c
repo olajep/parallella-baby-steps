@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 		for (col=0; col<platform.cols; col++){
 			// clear shared buffer.
 			memset(emsg, 0, buff_sz);
-			e_write(&emem, 0, 0, 0x0000, emsg, buff_sz);
+			e_write(&emem, -1, 0, 0x0000, emsg, buff_sz);
 
 			// Print working core 
 			coreid = (row + platform.row) * 64 + col + platform.col;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
 			// Read message from shared buffer
 			the_coreid = 0;
-			e_read(&emem, 0, 0, 0x0, &the_coreid, sizeof(the_coreid));
+			e_read(&emem, -1, 0, 0x0, &the_coreid, sizeof(the_coreid));
 			sprintf(emsg, "Hello World from core 0x%03x! \n", the_coreid);
 
 			// Print the message and close the workgroup.
