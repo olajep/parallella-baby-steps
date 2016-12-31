@@ -417,7 +417,7 @@ Disassembly of section .text:
  5b2:	194f 0402 	rts
  5b6:	194f 0402 	rts
  5ba:	194f 0402 	rts
- 5be:	01a2 	nop
+ 5be:	01a2      	nop
 
 Disassembly of section .comment:
 
@@ -434,9 +434,7 @@ Disassembly of section .comment:
   18:	3220      	bgtu 7c <_CORE_ROW_+0x5c>
   1a:	3130      	bgteu 7c <_CORE_ROW_+0x5c>
   1c:	2e36      	lsl r1,r3,0x11
-  1e:	2e33      	sub r1,r3,-4
-  20:	2931      	strh r1,[r2,r2]
-  22:	3520      	bgtu 8c <_CORE_ROW_+0x6c>
-  24:	342e      	asr r1,r5,0x1
-  26:	302e 	asr r1,r4,0x1
-	...
+  1e:	3131      	strh r1,[r4,r2]
+  20:	2029 2e35 	*unknown*
+  24:	2e34      	strh r1,[r3,0x4]
+  26:	0030      	bgteu 26 <_CORE_ROW_+0x6>

@@ -5,6 +5,12 @@
 
 #define max_ptrs 100
 
+#define MY_PERSONAL_DEF "HOLA_PERSONAL_DEF"
+
+#ifndef MY_PERSONAL_DEF
+#error ERROR. Missing personal def
+#endif
+
 //======================================================================
 // bitarray
 

@@ -21,3 +21,6 @@ cd ..
 cd jlq-test-7
 ./clean.sh
 cd ..
+cd jlq-test-8
+./clean.sh
+cd ..
