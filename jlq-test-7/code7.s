@@ -421,7 +421,7 @@ Disassembly of section .text:
 
 Disassembly of section .comment:
 
-00000000 <.comment>:
+00000000 <__stack-0x7ff0>:
    0:	4347      	fmsub r2,r0,r6
    2:	3a43      	mov r1,0xd2
    4:	2820      	bgtu 54 <_CORE_ROW_+0x34>

@@ -7,8 +7,8 @@ E_LIBS="-L ${ESDK}/tools/e-gnu/epiphany-elf/lib"
 E_LIBS_2="-L ${ESDK}/tools/e-gnu//lib/gcc/epiphany-elf/5.4.0/"
 ELIBS="-L ${ESDK}/tools/host/lib"
 EINCS="-I ${ESDK}/tools/host/include"
-# ELDF=${ESDK}/bsps/current/fast.ldf
-ELDF=jlq-ld-script.ldf
+ELDF=${ESDK}/bsps/current/fast.ldf
+# ELDF=jlq-ld-script.ldf
 
 SCRIPT=$(readlink -f "$0")
 EXEPATH=$(dirname "$SCRIPT")
