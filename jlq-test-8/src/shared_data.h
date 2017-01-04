@@ -33,10 +33,13 @@ extern "C"
 struct shared_data_st { // careful with alignment
 	uint32_t lines[num_ck_lines];
 	uint32_t status_reg;
+	uint32_t iret_reg;
+	uint32_t iret2_reg;
 	uint32_t counter;
 	uint32_t int_counter_loc;
 	uint32_t int_counter_shd;
 	uint16_t ipend_reg;
+	uint16_t ipend2_reg;
 	uint16_t imask_reg;
 	uint16_t ilat_reg;
 	e_coreid_t the_coreid;

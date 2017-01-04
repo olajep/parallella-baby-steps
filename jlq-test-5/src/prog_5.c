@@ -72,6 +72,9 @@ int main(int argc, char *argv[])
 		}
 	}
 	
+	e_reset_group(&dev);
+	e_reset_system();
+	
 	// Close the workgroup
 	e_close(&dev);
 	

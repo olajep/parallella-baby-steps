@@ -24,12 +24,17 @@ void prt_shd_mem(shared_data* sh_dat){
 	}
 	printf("] ");
 	printf("stat=0x%08x ", sh_dat->status_reg);
+	printf("iret=0x%08x ", sh_dat->iret_reg);
 	printf("imask=0x%03x ", sh_dat->imask_reg);
 	printf("ipend=0x%03x ", sh_dat->ipend_reg);
 	printf("ilat=0x%03x ", sh_dat->ilat_reg);
 	printf("cnter=%" PRIu32 " ", sh_dat->counter);
-	printf("loc_Icnter=%" PRIu32 " ", sh_dat->int_counter_loc);
-	printf("shd_Icnter=%" PRIu32 "\n", sh_dat->int_counter_shd);
+	printf("loc_Ic=%" PRIu32 " ", sh_dat->int_counter_loc);
+	printf("shd_Ic=%" PRIu32 " ", sh_dat->int_counter_shd);
+	printf("\n");
+	printf("iret2=0x%08x ", sh_dat->iret2_reg);
+	printf("ipend2=0x%03x ", sh_dat->ipend2_reg);
+	printf("\n");
 }
 
 int main(int argc, char *argv[])
