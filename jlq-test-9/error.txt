@@ -1,0 +1,25 @@
+InCORE 0x808 
+sp_val=0x7fd8 
+sp_val2=(nil) 
+pc_val=0x2cc 
+lr_val=0x696 
+lr_val2=(nil) 
+rts_addr=0x402 
+disp=15 
+find_err1=0x0eee 
+find_err2=0x0000 
+
+Type enter
+
+InCORE 0x808 
+sp_val=0x7fd8 
+sp_val2=(nil) 
+pc_val=0x2cc 
+lr_val=0x696 
+lr_val2=(nil) 
+rts_addr=0x402 
+disp=15 
+find_err1=0x0eee 
+find_err2=0x0000 
+
+Type enter

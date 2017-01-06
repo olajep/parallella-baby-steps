@@ -5,7 +5,7 @@
 .section IVT_RESET, "ax",@progbits
 	_start:
 	b normal_start
-.section .reserved_crt0
+.section .text
 	normal_start:
 	mov sp,0x7ff0
 	movt sp,0x0

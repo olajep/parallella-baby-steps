@@ -9,21 +9,38 @@
 #include <e-hal.h>
 #include <e-loader.h>
 
+#include "shared_data.h"
+
 #define f_nm_sz   1024
-#define buff_sz   (4096)
 #define buff_offset (0x01000000)
-
-#define mem_2K   2048
-#define mem_32K   32768
-
-#define max_ptrs 100
 
 int	write_file(char* the_pth, char* the_data, long the_sz, int write_once);
 
 char before[mem_32K];
 char after[mem_32K];
 
-char prt_stack_dat[mem_2K];
+void prt_shd_mem(shared_data_st* sh_dat){
+	uint32_t aa;
+	uint32_t sz_ptr = sh_dat->num_ptrs;
+	printf("CORE 0x%03x \n", sh_dat->the_coreid);
+	printf("num_ptrs=%u\n", sz_ptr);
+	printf("pc_val=0x%08x \n", sh_dat->pc_val);
+	printf("sp_val=0x%08x \n", sh_dat->sp_val);
+	printf("rts_addr=0x%08x \n", sh_dat->rts_addr);
+	printf("disp=0x%08x \n", sh_dat->disp);
+	printf("find_err=0x%08x \n", sh_dat->find_err);
+	printf("find_err2=0x%08x \n", sh_dat->find_err2);
+	printf("ptrs=[");
+	for(aa = 0; aa < sz_ptr; aa++){
+		printf("0x%08x ", (sh_dat->stack_prts)[aa]);
+	}
+	printf("] ");
+	printf("\n");
+	printf("lr=0x%08x ", sh_dat->lr_ptr);
+	//printf("dword[0]=0x%08x ", (sh_dat->dword)[0]);
+	//printf("dword[1]=0x%08x ", (sh_dat->dword)[1]);
+	printf("\n");
+}
 
 int main(int argc, char *argv[])
 {
@@ -31,61 +48,33 @@ int main(int argc, char *argv[])
 	e_platform_t platform;
 	e_epiphany_t dev;
 	e_mem_t emem;
+	shared_data_st sh_dat;
 	char f_nm[f_nm_sz];
-	
-	long shrd_offset;
-	long shrd_mem_sz;
-	
-	e_coreid_t the_coreid;
-	long num_stack_ptrs;
-	void*	stack_prts[max_ptrs];
-	
-	shrd_mem_sz = sizeof(the_coreid) + sizeof(num_stack_ptrs) + sizeof(stack_prts);
-
-	printf("sizeof(the_coreid)=%d\n", sizeof(the_coreid));
-	printf("sizeof(num_stack_ptrs)=%d\n", sizeof(num_stack_ptrs));
-	printf("sizeof(stack_prts)=%d\n", sizeof(stack_prts));
-	printf("shrd_mem_sz=%li\n", shrd_mem_sz);
 	
 	e_set_loader_verbosity(H_D0);
 
-	// initialize system, read platform params from
-	// default HDF. Then, reset the platform and
-	// get the actual system parameters.
 	e_init(NULL);
 	e_reset_system();
 	e_get_platform_info(&platform);
 
-	// Allocate a buffer in shared external memory
-	// for message passing from eCore to host.
-	e_alloc(&emem, buff_offset, shrd_mem_sz);	
+	e_alloc(&emem, buff_offset, sizeof(shared_data_st));	
 	
-    	// Open a workgroup
 	e_open(&dev, 0, 0, platform.rows, platform.cols);
 
-	// Reset workgroup local mem
-	for (row=0; row < platform.rows; row++){
-		for (col=0; col < platform.cols; col++){
-			e_write(&dev, row, col, 0x0, before, mem_32K);
-			sprintf(f_nm, "mem_inited_row%d_col%d.dat", row, col);
-			
-			//if(row == 0){
-			//if(1){
-			if((row == 0) && (col == 0)){
-				e_read(&dev, row, col, 0x0, after, mem_32K);
-				write_file(f_nm, after, mem_32K, 1);
-			}
-		}
-	}
-	
-	// Reset the workgroup
 	e_reset_group(&dev);
 
-	// Load the device program onto all the eCores
 	e_load_group("e_prog_7.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 
-	for (row=0; row<platform.rows; row++){
-		for (col=0; col<platform.cols; col++){
+	row = 0;
+	col = 0;
+	//for (row=0; row<platform.rows; row++){
+		//for (col=0; col<platform.cols; col++){
+			
+			// clear shared buffer.
+			shared_data_st sh_dat_0;
+			memset(&sh_dat_0, 0, sizeof(shared_data_st));
+			e_write(&emem, -1, 0, 0x0, &sh_dat_0, sizeof(shared_data_st));
+			
 			memset(before, 0, mem_32K);
 			memset(after, 0, mem_32K);
 			
@@ -102,53 +91,33 @@ int main(int argc, char *argv[])
 			// Wait for core program execution to finish.
 			usleep(10000);
 
-			// Read message from shared buffer
-			shrd_offset = 0;
+			// read shared buffer.
+			shared_data_st sh_dat_1;
+			memset(&sh_dat_1, 0, sizeof(shared_data_st));
+			e_read(&emem, -1, 0, 0x0, &sh_dat_1, sizeof(shared_data_st));
+			prt_shd_mem(&sh_dat_1);
 			
-			the_coreid = 0;
-			e_read(&emem, -1, 0, shrd_offset, &the_coreid, sizeof(the_coreid));
-			shrd_offset += sizeof(the_coreid);
-			printf("Hello World from core 0x%03x! \n", the_coreid);
-			
-			num_stack_ptrs = 0;
-			e_read(&emem, -1, 0, shrd_offset, &num_stack_ptrs, sizeof(num_stack_ptrs));
-			shrd_offset += sizeof(num_stack_ptrs);
-			printf("num_stack_ptrs=%li\n\n", num_stack_ptrs);
-
-			long sz_ptrs = sizeof(stack_prts);
-			memset(stack_prts, 0, sz_ptrs);
-			e_read(&emem, 0, 0, shrd_offset, &stack_prts, sz_ptrs);
-			shrd_offset += sz_ptrs;
-			
-			memset(prt_stack_dat, ' ', mem_2K);
-			char* prt_pt = prt_stack_dat;
-			long ff = 0;
-			for(ff = 0; ff < max_ptrs; ff++){
-				int nn = sprintf(prt_pt, "%p ", stack_prts[ff]);
-				prt_pt += nn;
-			}
-			int nn2 = printf(prt_pt, "\n\n");
-			prt_pt += nn2;
-			*prt_pt = ' ';
-
 			// read local mem after.
 			e_read(&dev, row, col, 0x0, after, mem_32K);
 
 			//if(row == 0){
 			//if(1){
-			if((row == 0) && (col == 0)){
-				sprintf(f_nm, "stack_prt_row%d_col%d.txt", row, col);
-				write_file(f_nm, prt_stack_dat, mem_2K, 1);
-				
+			//if((row == 0) && (col == 0)){
+			/*
+			if(0){
 				sprintf(f_nm, "mem_before_row%d_col%d.dat", row, col);
 				write_file(f_nm, before, mem_32K, 1);
 				
 				sprintf(f_nm, "mem_after_row%d_col%d.dat", row, col);
 				write_file(f_nm, after, mem_32K, 1);
 			}
-			
-		}
-	}
+			*/
+		//}
+	//}
+	
+	// Reset the workgroup
+	e_reset_group(&dev); // FAILS. Why?
+	e_reset_system();
 	
 	// Close the workgroup
 	e_close(&dev);

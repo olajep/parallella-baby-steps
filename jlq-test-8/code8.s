@@ -5,7 +5,7 @@ bin/e_prog_8.elf:     file format elf32-epiphany
 Disassembly of section ivt_reset:
 
 00000000 <_start>:
-   0:	d0e8 0001 	b 3a0 <normal_start>
+   0:	dae8 0001 	b 3b4 <normal_start>
 
 Disassembly of section ivt_user:
 
@@ -37,7 +37,7 @@ Disassembly of section .text:
 00000100 <main>:
  100:	f55c 2700 	str fp,[sp],-0x2
  104:	f4ef 2402 	mov fp,sp
- 108:	120b 0042 	mov r0,0x490
+ 108:	148b 0042 	mov r0,0x4a4
  10c:	000b 1002 	movt r0,0x0
  110:	2003      	mov r1,0x0
  112:	2054      	str r1,[r0]
@@ -82,31 +82,31 @@ Disassembly of section .text:
  1a0:	000b 18f2 	movt r0,0x8f00
  1a4:	2023      	mov r1,0x1
  1a6:	20d4      	str r1,[r0,0x1]
- 1a8:	128b 0042 	mov r0,0x494
+ 1a8:	150b 0042 	mov r0,0x4a8
  1ac:	000b 1002 	movt r0,0x0
  1b0:	2003      	mov r1,0x0
  1b2:	2054      	str r1,[r0]
- 1b4:	128b 0042 	mov r0,0x494
+ 1b4:	150b 0042 	mov r0,0x4a8
  1b8:	000b 1002 	movt r0,0x0
  1bc:	2003      	mov r1,0x0
  1be:	2054      	str r1,[r0]
  1c0:	19e0      	b 1f2 <main+0xf2>
  1c2:	0392      	gid
- 1c4:	128b 0042 	mov r0,0x494
+ 1c4:	150b 0042 	mov r0,0x4a8
  1c8:	000b 1002 	movt r0,0x0
  1cc:	2044      	ldr r1,[r0]
  1ce:	000b 0002 	mov r0,0x0
  1d2:	000b 18f2 	movt r0,0x8f00
  1d6:	215c 0001 	str r1,[r0,+0xa]
- 1da:	128b 0042 	mov r0,0x494
+ 1da:	150b 0042 	mov r0,0x4a8
  1de:	000b 1002 	movt r0,0x0
  1e2:	0044      	ldr r0,[r0]
  1e4:	2093      	add r1,r0,1
- 1e6:	128b 0042 	mov r0,0x494
+ 1e6:	150b 0042 	mov r0,0x4a8
  1ea:	000b 1002 	movt r0,0x0
  1ee:	2054      	str r1,[r0]
  1f0:	0192      	gie
- 1f2:	128b 0042 	mov r0,0x494
+ 1f2:	150b 0042 	mov r0,0x4a8
  1f6:	000b 1002 	movt r0,0x0
  1fa:	2044      	ldr r1,[r0]
  1fc:	07cb 0422 	mov r0,0x423e
@@ -138,12 +138,12 @@ Disassembly of section .text:
  24a:	c8ef 4002 	mov r22,r2
  24e:	ecef 4002 	mov r23,r3
  252:	10ef 6002 	mov r24,r4
- 256:	120b 0042 	mov r0,0x490
+ 256:	148b 0042 	mov r0,0x4a4
  25a:	000b 1002 	movt r0,0x0
  25e:	0044      	ldr r0,[r0]
  260:	2033      	sub r1,r0,0
  262:	3410      	bne 2ca <user_int_func_1+0xa6>
- 264:	120b 0042 	mov r0,0x490
+ 264:	148b 0042 	mov r0,0x4a4
  268:	000b 1002 	movt r0,0x0
  26c:	2023      	mov r1,0x1
  26e:	2054      	str r1,[r0]
@@ -151,7 +151,7 @@ Disassembly of section .text:
  274:	000b 18f2 	movt r0,0x8f00
  278:	20a3      	mov r1,0x5
  27a:	22d4      	str r1,[r0,0x5]
- 27c:	128b 0042 	mov r0,0x494
+ 27c:	150b 0042 	mov r0,0x4a8
  280:	000b 1002 	movt r0,0x0
  284:	2044      	ldr r1,[r0]
  286:	000b 0002 	mov r0,0x0
@@ -188,143 +188,149 @@ Disassembly of section .text:
  2fa:	01d2      	rti
 
 000002fc <user_int_func_3>:
- 2fc:	0392      	gid
- 2fe:	80ef 4002 	mov r20,r0
- 302:	a4ef 4002 	mov r21,r1
- 306:	c8ef 4002 	mov r22,r2
- 30a:	ecef 4002 	mov r23,r3
- 30e:	10ef 6002 	mov r24,r4
- 312:	120b 0042 	mov r0,0x490
- 316:	000b 1002 	movt r0,0x0
- 31a:	0044      	ldr r0,[r0]
- 31c:	2033      	sub r1,r0,0
- 31e:	3410      	bne 386 <user_int_func_3+0x8a>
- 320:	120b 0042 	mov r0,0x490
- 324:	000b 1002 	movt r0,0x0
- 328:	2023      	mov r1,0x1
- 32a:	2054      	str r1,[r0]
- 32c:	000b 0002 	mov r0,0x0
- 330:	000b 18f2 	movt r0,0x8f00
- 334:	20a3      	mov r1,0x5
- 336:	22d4      	str r1,[r0,0x5]
- 338:	128b 0042 	mov r0,0x494
- 33c:	000b 1002 	movt r0,0x0
- 340:	2044      	ldr r1,[r0]
- 342:	000b 0002 	mov r0,0x0
- 346:	000b 18f2 	movt r0,0x8f00
- 34a:	21dc 0001 	str r1,[r0,+0xb]
- 34e:	000b 0002 	mov r0,0x0
- 352:	000b 18f2 	movt r0,0x8f00
- 356:	214c 0001 	ldr r1,[r0,+0xa]
- 35a:	000b 0002 	mov r0,0x0
- 35e:	000b 18f2 	movt r0,0x8f00
- 362:	225c 0001 	str r1,[r0,+0xc]
- 366:	351f 0402 	movfs r1,ipend
- 36a:	000b 0002 	mov r0,0x0
- 36e:	000b 18f2 	movt r0,0x8f00
- 372:	21bc 0003 	strh r1,[r0,+0x1b]
- 376:	211f 0402 	movfs r1,iret
- 37a:	000b 0002 	mov r0,0x0
- 37e:	000b 18f2 	movt r0,0x8f00
- 382:	20dc 0001 	str r1,[r0,+0x9]
- 386:	10ef 0802 	mov r0,r20
- 38a:	34ef 0802 	mov r1,r21
- 38e:	58ef 0802 	mov r2,r22
- 392:	7cef 0802 	mov r3,r23
- 396:	80ef 0c02 	mov r4,r24
- 39a:	0192      	gie
- 39c:	01d2      	rti
- 39e:	01a2      	nop
+ 2fc:	f55c 2700 	str fp,[sp],-0x2
+ 300:	f4ef 2402 	mov fp,sp
+ 304:	0392      	gid
+ 306:	80ef 4002 	mov r20,r0
+ 30a:	a4ef 4002 	mov r21,r1
+ 30e:	c8ef 4002 	mov r22,r2
+ 312:	ecef 4002 	mov r23,r3
+ 316:	10ef 6002 	mov r24,r4
+ 31a:	148b 0042 	mov r0,0x4a4
+ 31e:	000b 1002 	movt r0,0x0
+ 322:	0044      	ldr r0,[r0]
+ 324:	2033      	sub r1,r0,0
+ 326:	3410      	bne 38e <user_int_func_3+0x92>
+ 328:	148b 0042 	mov r0,0x4a4
+ 32c:	000b 1002 	movt r0,0x0
+ 330:	2023      	mov r1,0x1
+ 332:	2054      	str r1,[r0]
+ 334:	000b 0002 	mov r0,0x0
+ 338:	000b 18f2 	movt r0,0x8f00
+ 33c:	20a3      	mov r1,0x5
+ 33e:	22d4      	str r1,[r0,0x5]
+ 340:	150b 0042 	mov r0,0x4a8
+ 344:	000b 1002 	movt r0,0x0
+ 348:	2044      	ldr r1,[r0]
+ 34a:	000b 0002 	mov r0,0x0
+ 34e:	000b 18f2 	movt r0,0x8f00
+ 352:	21dc 0001 	str r1,[r0,+0xb]
+ 356:	000b 0002 	mov r0,0x0
+ 35a:	000b 18f2 	movt r0,0x8f00
+ 35e:	214c 0001 	ldr r1,[r0,+0xa]
+ 362:	000b 0002 	mov r0,0x0
+ 366:	000b 18f2 	movt r0,0x8f00
+ 36a:	225c 0001 	str r1,[r0,+0xc]
+ 36e:	351f 0402 	movfs r1,ipend
+ 372:	000b 0002 	mov r0,0x0
+ 376:	000b 18f2 	movt r0,0x8f00
+ 37a:	21bc 0003 	strh r1,[r0,+0x1b]
+ 37e:	211f 0402 	movfs r1,iret
+ 382:	000b 0002 	mov r0,0x0
+ 386:	000b 18f2 	movt r0,0x8f00
+ 38a:	20dc 0001 	str r1,[r0,+0x9]
+ 38e:	10ef 0802 	mov r0,r20
+ 392:	34ef 0802 	mov r1,r21
+ 396:	58ef 0802 	mov r2,r22
+ 39a:	7cef 0802 	mov r3,r23
+ 39e:	80ef 0c02 	mov r4,r24
+ 3a2:	0192      	gie
+ 3a4:	01d2      	rti
+ 3a6:	01a2      	nop
+ 3a8:	f54c 2400 	ldr fp,[sp,+0x2]
+ 3ac:	b41b 2401 	add sp,sp,8
+ 3b0:	194f 0402 	rts
 
-000003a0 <normal_start>:
- 3a0:	be0b 27f2 	mov sp,0x7ff0
- 3a4:	a00b 3002 	movt sp,0x0
- 3a8:	e00b 2002 	mov fp,0x0
- 3ac:	151f a402 	movfs r40,ipend
- 3b0:	780b 0032 	mov r3,0x3c0
- 3b4:	600b 1002 	movt r3,0x0
- 3b8:	610f 0402 	movts iret,r3
- 3bc:	01d2      	rti
- 3be:	01a2      	nop
-
-000003c0 <main_caller>:
- 3c0:	351f a402 	movfs r41,ipend
- 3c4:	9dcb 40f2 	mov r20,0xfee
- 3c8:	600b 0012 	mov r3,0x100
- 3cc:	600b 1002 	movt r3,0x0
- 3d0:	0d52      	jalr r3
+000003b4 <normal_start>:
+ 3b4:	be0b 27f2 	mov sp,0x7ff0
+ 3b8:	a00b 3002 	movt sp,0x0
+ 3bc:	e00b 2002 	mov fp,0x0
+ 3c0:	151f a402 	movfs r40,ipend
+ 3c4:	7a8b 0032 	mov r3,0x3d4
+ 3c8:	600b 1002 	movt r3,0x0
+ 3cc:	610f 0402 	movts iret,r3
+ 3d0:	01d2      	rti
  3d2:	01a2      	nop
- 3d4:	1feb 0032 	mov r0,0x3ff
- 3d8:	050f 0402 	movts imask,r0
- 3dc:	0392      	gid
- 3de:	0fe2      	trap 0x3
- 3e0:	01a2      	nop
- 3e2:	2912      	movfs r1,pc
- 3e4:	0552      	jalr r1
- 3e6:	01a2      	nop
 
-000003e8 <user_int_func_2>:
- 3e8:	0392      	gid
- 3ea:	80ef 4002 	mov r20,r0
- 3ee:	a4ef 4002 	mov r21,r1
- 3f2:	c8ef 4002 	mov r22,r2
- 3f6:	ecef 4002 	mov r23,r3
- 3fa:	10ef 6002 	mov r24,r4
- 3fe:	120b 0042 	mov r0,0x490
- 402:	000b 1002 	movt r0,0x0
- 406:	0044      	ldr r0,[r0]
- 408:	2033      	sub r1,r0,0
- 40a:	3410      	bne 472 <user_int_func_2+0x8a>
- 40c:	120b 0042 	mov r0,0x490
- 410:	000b 1002 	movt r0,0x0
- 414:	2023      	mov r1,0x1
- 416:	2054      	str r1,[r0]
- 418:	000b 0002 	mov r0,0x0
- 41c:	000b 18f2 	movt r0,0x8f00
- 420:	20a3      	mov r1,0x5
- 422:	22d4      	str r1,[r0,0x5]
- 424:	128b 0042 	mov r0,0x494
- 428:	000b 1002 	movt r0,0x0
- 42c:	2044      	ldr r1,[r0]
- 42e:	000b 0002 	mov r0,0x0
- 432:	000b 18f2 	movt r0,0x8f00
- 436:	21dc 0001 	str r1,[r0,+0xb]
- 43a:	000b 0002 	mov r0,0x0
- 43e:	000b 18f2 	movt r0,0x8f00
- 442:	214c 0001 	ldr r1,[r0,+0xa]
- 446:	000b 0002 	mov r0,0x0
- 44a:	000b 18f2 	movt r0,0x8f00
- 44e:	225c 0001 	str r1,[r0,+0xc]
- 452:	351f 0402 	movfs r1,ipend
- 456:	000b 0002 	mov r0,0x0
- 45a:	000b 18f2 	movt r0,0x8f00
- 45e:	21bc 0003 	strh r1,[r0,+0x1b]
- 462:	211f 0402 	movfs r1,iret
- 466:	000b 0002 	mov r0,0x0
- 46a:	000b 18f2 	movt r0,0x8f00
- 46e:	20dc 0001 	str r1,[r0,+0x9]
- 472:	10ef 0802 	mov r0,r20
- 476:	34ef 0802 	mov r1,r21
- 47a:	58ef 0802 	mov r2,r22
- 47e:	7cef 0802 	mov r3,r23
- 482:	80ef 0c02 	mov r4,r24
- 486:	0192      	gie
- 488:	01d2      	rti
- 48a:	01a2      	nop
- 48c:	01d2      	rti
- 48e:	01a2      	nop
+000003d4 <main_caller>:
+ 3d4:	351f a402 	movfs r41,ipend
+ 3d8:	9dcb 40f2 	mov r20,0xfee
+ 3dc:	600b 0012 	mov r3,0x100
+ 3e0:	600b 1002 	movt r3,0x0
+ 3e4:	0d52      	jalr r3
+ 3e6:	01a2      	nop
+ 3e8:	1feb 0032 	mov r0,0x3ff
+ 3ec:	050f 0402 	movts imask,r0
+ 3f0:	0392      	gid
+ 3f2:	0fe2      	trap 0x3
+ 3f4:	01a2      	nop
+ 3f6:	2912      	movfs r1,pc
+ 3f8:	0552      	jalr r1
+ 3fa:	01a2      	nop
+
+000003fc <user_int_func_2>:
+ 3fc:	0392      	gid
+ 3fe:	80ef 4002 	mov r20,r0
+ 402:	a4ef 4002 	mov r21,r1
+ 406:	c8ef 4002 	mov r22,r2
+ 40a:	ecef 4002 	mov r23,r3
+ 40e:	10ef 6002 	mov r24,r4
+ 412:	148b 0042 	mov r0,0x4a4
+ 416:	000b 1002 	movt r0,0x0
+ 41a:	0044      	ldr r0,[r0]
+ 41c:	2033      	sub r1,r0,0
+ 41e:	3410      	bne 486 <user_int_func_2+0x8a>
+ 420:	148b 0042 	mov r0,0x4a4
+ 424:	000b 1002 	movt r0,0x0
+ 428:	2023      	mov r1,0x1
+ 42a:	2054      	str r1,[r0]
+ 42c:	000b 0002 	mov r0,0x0
+ 430:	000b 18f2 	movt r0,0x8f00
+ 434:	20a3      	mov r1,0x5
+ 436:	22d4      	str r1,[r0,0x5]
+ 438:	150b 0042 	mov r0,0x4a8
+ 43c:	000b 1002 	movt r0,0x0
+ 440:	2044      	ldr r1,[r0]
+ 442:	000b 0002 	mov r0,0x0
+ 446:	000b 18f2 	movt r0,0x8f00
+ 44a:	21dc 0001 	str r1,[r0,+0xb]
+ 44e:	000b 0002 	mov r0,0x0
+ 452:	000b 18f2 	movt r0,0x8f00
+ 456:	214c 0001 	ldr r1,[r0,+0xa]
+ 45a:	000b 0002 	mov r0,0x0
+ 45e:	000b 18f2 	movt r0,0x8f00
+ 462:	225c 0001 	str r1,[r0,+0xc]
+ 466:	351f 0402 	movfs r1,ipend
+ 46a:	000b 0002 	mov r0,0x0
+ 46e:	000b 18f2 	movt r0,0x8f00
+ 472:	21bc 0003 	strh r1,[r0,+0x1b]
+ 476:	211f 0402 	movfs r1,iret
+ 47a:	000b 0002 	mov r0,0x0
+ 47e:	000b 18f2 	movt r0,0x8f00
+ 482:	20dc 0001 	str r1,[r0,+0x9]
+ 486:	10ef 0802 	mov r0,r20
+ 48a:	34ef 0802 	mov r1,r21
+ 48e:	58ef 0802 	mov r2,r22
+ 492:	7cef 0802 	mov r3,r23
+ 496:	80ef 0c02 	mov r4,r24
+ 49a:	0192      	gie
+ 49c:	01d2      	rti
+ 49e:	01a2      	nop
+ 4a0:	01d2      	rti
+ 4a2:	01a2      	nop
 
 Disassembly of section .bss:
 
-00000490 <__bss_start>:
- 490:	0000      	beq 490 <__bss_start>
+000004a4 <isr_ok>:
+ 4a4:	0000      	beq 4a4 <isr_ok>
 	...
 
-00000494 <count_iter>:
- 494:	0000      	beq 494 <count_iter>
+000004a8 <__bss_start>:
+ 4a8:	0000      	beq 4a8 <__bss_start>
 	...
 
-00000498 <iter2>:
+000004ac <iter2>:
+ 4ac:	0000      	beq 4ac <iter2>
 	...
 
 Disassembly of section .comment:
