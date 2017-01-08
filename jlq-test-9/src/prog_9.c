@@ -22,8 +22,83 @@ char after[bj_mem_32K];
 
 //bj_off_core_st all_cores_copy[BJ_NUM_CORES];
 
+void prt_all_regs(bj_in_core_st* sh_dat){
+	printf("reg_1=0x%08x \n", sh_dat->reg_1);
+	printf("reg_2=0x%08x \n", sh_dat->reg_2);
+	printf("reg_3=0x%08x \n", sh_dat->reg_3);
+	printf("reg_4=0x%08x \n", sh_dat->reg_4);
+	printf("reg_5=0x%08x \n", sh_dat->reg_5);
+	printf("reg_6=0x%08x \n", sh_dat->reg_6);
+	printf("reg_7=0x%08x \n", sh_dat->reg_7);
+	printf("reg_8=0x%08x \n", sh_dat->reg_8);
+	printf("reg_9=0x%08x \n", sh_dat->reg_9);
+	
+	printf("reg_10=0x%08x \n", sh_dat->reg_10);
+	printf("reg_11=0x%08x \n", sh_dat->reg_11);
+	printf("reg_12=0x%08x \n", sh_dat->reg_12);
+	printf("reg_13=0x%08x \n", sh_dat->reg_13);
+	printf("reg_14=0x%08x \n", sh_dat->reg_14);
+	printf("reg_15=0x%08x \n", sh_dat->reg_15);
+	printf("reg_16=0x%08x \n", sh_dat->reg_16);
+	printf("reg_17=0x%08x \n", sh_dat->reg_17);
+	printf("reg_18=0x%08x \n", sh_dat->reg_18);
+	printf("reg_19=0x%08x \n", sh_dat->reg_19);
+	
+	printf("reg_20=0x%08x \n", sh_dat->reg_20);
+	printf("reg_21=0x%08x \n", sh_dat->reg_21);
+	printf("reg_22=0x%08x \n", sh_dat->reg_22);
+	printf("reg_23=0x%08x \n", sh_dat->reg_23);
+	printf("reg_24=0x%08x \n", sh_dat->reg_24);
+	printf("reg_25=0x%08x \n", sh_dat->reg_25);
+	printf("reg_26=0x%08x \n", sh_dat->reg_26);
+	printf("reg_27=0x%08x \n", sh_dat->reg_27);
+	printf("reg_28=0x%08x \n", sh_dat->reg_28);
+	printf("reg_29=0x%08x \n", sh_dat->reg_29);
+
+	printf("reg_30=0x%08x \n", sh_dat->reg_30);
+	printf("reg_31=0x%08x \n", sh_dat->reg_31);
+	printf("reg_32=0x%08x \n", sh_dat->reg_32);
+	printf("reg_33=0x%08x \n", sh_dat->reg_33);
+	printf("reg_34=0x%08x \n", sh_dat->reg_34);
+	printf("reg_35=0x%08x \n", sh_dat->reg_35);
+	printf("reg_36=0x%08x \n", sh_dat->reg_36);
+	printf("reg_37=0x%08x \n", sh_dat->reg_37);
+	printf("reg_38=0x%08x \n", sh_dat->reg_38);
+	printf("reg_39=0x%08x \n", sh_dat->reg_39);
+	
+	printf("reg_40=0x%08x \n", sh_dat->reg_40);
+	printf("reg_41=0x%08x \n", sh_dat->reg_41);
+	printf("reg_42=0x%08x \n", sh_dat->reg_42);
+	printf("reg_43=0x%08x \n", sh_dat->reg_43);
+	printf("reg_44=0x%08x \n", sh_dat->reg_44);
+	printf("reg_45=0x%08x \n", sh_dat->reg_45);
+	printf("reg_46=0x%08x \n", sh_dat->reg_46);
+	printf("reg_47=0x%08x \n", sh_dat->reg_47);
+	printf("reg_48=0x%08x \n", sh_dat->reg_48);
+	printf("reg_49=0x%08x \n", sh_dat->reg_49);
+	
+	printf("reg_50=0x%08x \n", sh_dat->reg_50);
+	printf("reg_51=0x%08x \n", sh_dat->reg_51);
+	printf("reg_52=0x%08x \n", sh_dat->reg_52);
+	printf("reg_53=0x%08x \n", sh_dat->reg_53);
+	printf("reg_54=0x%08x \n", sh_dat->reg_54);
+	printf("reg_55=0x%08x \n", sh_dat->reg_55);
+	printf("reg_56=0x%08x \n", sh_dat->reg_56);
+	printf("reg_57=0x%08x \n", sh_dat->reg_57);
+	printf("reg_58=0x%08x \n", sh_dat->reg_58);
+	printf("reg_59=0x%08x \n", sh_dat->reg_59);
+	
+	printf("reg_60=0x%08x \n", sh_dat->reg_60);
+	printf("reg_61=0x%08x \n", sh_dat->reg_61);
+	printf("reg_62=0x%08x \n", sh_dat->reg_62);
+	printf("reg_63=0x%08x \n", sh_dat->reg_63);
+	
+	
+}
+
 void prt_shd_mem(bj_in_core_st* sh_dat){
 	printf("InCORE 0x%03x \n", sh_dat->the_coreid);
+	printf("progress_flag=0x%08x \n", sh_dat->progress_flag);
 	printf("sp_val=%p \n", sh_dat->sp_val);
 	printf("sp_val2=%p \n", sh_dat->sp_val2);
 	printf("sp_val3=%p \n", sh_dat->sp_val3);
@@ -36,6 +111,8 @@ void prt_shd_mem(bj_in_core_st* sh_dat){
 	printf("find_err1=0x%04x \n", sh_dat->find_err1);
 	printf("find_err2=0x%04x \n", sh_dat->find_err2);
 	printf("find_err3=0x%04x \n", sh_dat->find_err3);
+	//printf("\n");
+	//prt_all_regs(sh_dat);
 	printf("\n");
 }
 

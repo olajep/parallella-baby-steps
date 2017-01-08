@@ -83,6 +83,72 @@ bj_v32_of_p16(uint16_t* p16){
 struct bj_in_core_shared_data_def { 
 	uint32_t  magic_id;
 	uint32_t progress_flag;
+	
+	uint32_t reg_0;
+	uint32_t reg_1;
+	uint32_t reg_2;
+	uint32_t reg_3;
+	uint32_t reg_4;
+	uint32_t reg_5;
+	uint32_t reg_6;
+	uint32_t reg_7;
+	uint32_t reg_8;
+	uint32_t reg_9;
+	uint32_t reg_10;
+	uint32_t reg_11;
+	uint32_t reg_12;
+	uint32_t reg_13;
+	uint32_t reg_14;
+	uint32_t reg_15;
+	uint32_t reg_16;
+	uint32_t reg_17;
+	uint32_t reg_18;
+	uint32_t reg_19;
+	uint32_t reg_20;
+	uint32_t reg_21;
+	uint32_t reg_22;
+	uint32_t reg_23;
+	uint32_t reg_24;
+	uint32_t reg_25;
+	uint32_t reg_26;
+	uint32_t reg_27;
+	uint32_t reg_28;
+	uint32_t reg_29;
+	uint32_t reg_30;
+	uint32_t reg_31;
+	uint32_t reg_32;
+	uint32_t reg_33;
+	uint32_t reg_34;
+	uint32_t reg_35;
+	uint32_t reg_36;
+	uint32_t reg_37;
+	uint32_t reg_38;
+	uint32_t reg_39;
+	uint32_t reg_40;
+	uint32_t reg_41;
+	uint32_t reg_42;
+	uint32_t reg_43;
+	uint32_t reg_44;
+	uint32_t reg_45;
+	uint32_t reg_46;
+	uint32_t reg_47;
+	uint32_t reg_48;
+	uint32_t reg_49;
+	uint32_t reg_50;
+	uint32_t reg_51;
+	uint32_t reg_52;
+	uint32_t reg_53;
+	uint32_t reg_54;
+	uint32_t reg_55;
+	uint32_t reg_56;
+	uint32_t reg_57;
+	uint32_t reg_58;
+	uint32_t reg_59;
+	uint32_t reg_60;
+	uint32_t reg_61;
+	uint32_t reg_62;
+	uint32_t reg_63;
+	
 	uint16_t* sp_val; 
 	uint16_t* sp_val2; 
 	uint16_t* sp_val3;
@@ -114,3 +180,4 @@ typedef struct bj_off_core_shared_data_def bj_off_core_st;
 #endif
 
 #endif // BJ_SHARED_DATA_H
+
