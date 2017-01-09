@@ -1,5 +1,5 @@
 
-bin/e_prog_10.elf:     file format elf32-epiphany
+bin/e_prog_11.elf:     file format elf32-epiphany
 
 
 Disassembly of section ivt_reset:
