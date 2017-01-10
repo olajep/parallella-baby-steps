@@ -56,6 +56,7 @@ get_num_core(unsigned coreid){
 
 int main(int argc, char *argv[])
 {
+	const char* epiphany_elf_nm = "e_prog_11.elf";
 	unsigned row, col, max_row, max_col, coreid;
 	e_platform_t platform;
 	e_epiphany_t dev;
@@ -75,7 +76,7 @@ int main(int argc, char *argv[])
 
 	e_reset_group(&dev);
 
-	e_load_group("e_prog_11.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
+	e_load_group(epiphany_elf_nm, &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 
 	row = 0;
 	col = 0;
@@ -171,7 +172,8 @@ int main(int argc, char *argv[])
 			void* 	trace[BJ_MAX_CALL_STACK_SZ];
 			memset(trace, 0, sizeof(trace));
 			e_read(&dev, row, col, (uint32_t)inco.dbg_stack_trace, trace, sizeof(trace));
-			prt_stack_trace(trace);
+			//prt_stack_trace(trace);
+			bj_prt_call_stack(epiphany_elf_nm, BJ_MAX_CALL_STACK_SZ, trace);
 			
 			// read local mem after.
 			e_read(&dev, row, col, 0x0, after, bj_mem_32K);

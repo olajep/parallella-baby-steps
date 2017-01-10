@@ -7,9 +7,12 @@
 
 #define bj_simm11_up(pt_i16)	(((pt_i16)[1] & 0x00FF) << 3)
 #define bj_simm11_low(pt_i16)	(((pt_i16)[0] & 0x0380) >> 7)
-#define bj_get_simm11_bits(pt_i16) (bj_simm11_up(pt_i16) | bj_simm11_low(pt_i16))
+#define bj_simm11_to_uint(pt_i16) (bj_simm11_up(pt_i16) | bj_simm11_low(pt_i16))
 
 #define bj_get_two_compl(vv) ((bj_get_bit(&(vv), 10)) ? (-((((vv) & ~0x7FF) | (~(vv) & 0x7FF)) + 1)) : (vv))
+
+#define bj_uint_to_simm11_up(ui16)	((ui16) >> 3)
+#define bj_uint_to_simm11_low(ui16)	(((ui16) & 0x7) << 7)
 
 //======================================================================
 
@@ -21,6 +24,12 @@ void bj_naked_fn
 user_int_func_1(void){
 	bj_asm("rti" "\n\t");
 }
+
+static void 
+get_call_opcode(uint16_t opcode[2], int16_t disp);
+	
+uint16_t*
+find_call(uint16_t* code_addr, uint16_t opcode[2]);
 
 static int16_t 
 get_add_simm11(uint16_t* add_cod);
@@ -118,6 +127,10 @@ set_shdat(void) {
 
 uint16_t
 bj_get_call_stack_trace(uint16_t sz, void** trace) {
+	// WARNING
+	// This function dissasembles to find RTS calls, next SP disp, and call addrs.
+	// If e-gcc changes the generated code this function MUST be updated.
+	
 	uint16_t* pc_val = 0;
 	uint16_t* sp_val = 0;
 	uint16_t* rts_addr = 0;
@@ -152,13 +165,24 @@ bj_get_call_stack_trace(uint16_t sz, void** trace) {
 		uint8_t* aux_sp = (uint8_t*)(sp_val);
 		aux_sp += disp;
 		sp_val = (uint16_t*)aux_sp; // casting up!! CAREFUL. disp MUST be even num
-	
+
+		// get call addr
+		uint16_t call_opcode[2];
+		uint16_t call_disp = bj_div8(disp);
+		get_call_opcode(call_opcode, call_disp);
+		
+		uint16_t* call_addr = find_call(pc_val, call_opcode);
+		
+		// get next pc_val
 		uint32_t aux_v32 = bj_v32_of_p16(sp_val);
 		pc_val = (uint16_t*)aux_v32;
 		in_core_shd.pc_val = pc_val;
 		
-		trace[idx++] = pc_val;
+		// add trace call
+		//trace[idx++] = pc_val;
+		trace[idx++] = call_addr;
 		
+		// find next rts_addr
 		rts_addr = find_rts(pc_val);
 	}
 	return idx;
@@ -237,22 +261,56 @@ void fun7(double pm1) {
 	fun6(66);
 }
 
-//int16_t 
+void fun8() {
+	fun7(1.0);
+}
+
+void fun9() {
+	fun8();
+}
+
+void fun10() {
+	fun9();
+}
+
 static int16_t bj_inline_fn
 get_add_simm11(uint16_t* add_cod){
 	int16_t val_simm11 = 0;
 
-	val_simm11 = bj_get_simm11_bits(add_cod);
+	val_simm11 = bj_simm11_to_uint(add_cod);
 	val_simm11 = bj_get_two_compl(val_simm11);
 	return val_simm11;
 }
 
+static void bj_inline_fn
+get_call_opcode(uint16_t opcode[2], int16_t disp){
+	opcode[0] = 0xd47c;
+	opcode[1] = 0x2700;
+	opcode[0] |= bj_uint_to_simm11_low(disp);
+	opcode[1] |= bj_uint_to_simm11_up(disp);
+}
+
+uint16_t*
+find_call(uint16_t* code_addr, uint16_t opcode[2]){
+	uint16_t* addr = code_addr;
+	bj_trace_err = 0x0;
+	while(addr > 0x0){
+		if((addr[0] == opcode[0]) && (addr[1] == opcode[1])){
+			bj_trace_err = 0x1eee;
+			break;
+		}
+		if((addr[0] == 0x194f) && (addr[1] == 0x0402)){	// should not find any rts
+			bj_trace_err = 0x11;
+			addr = 0;
+			break;
+		}
+		addr--;
+	}
+	return addr;
+}
+
 int16_t
 get_sp_disp(uint16_t* code_addr){
-	// WARNING
-	// This function dissasembles to find next SP disp.
-	// If e-gcc changes the generated code this function MUST be updated.
-	
 	uint16_t* addr = code_addr;
 	addr -= 2;
 	uint16_t v0 = addr[0];
@@ -296,10 +354,6 @@ get_sp_disp(uint16_t* code_addr){
 
 uint16_t*
 find_rts(uint16_t* code_addr){
-	// WARNING
-	// This function dissasembles to find next SP disp.
-	// If e-gcc changes the generated code this function MUST be updated.
-	
 	// byte order in mem = 4F 19 // lower opcode for rts(32) == 0x194f
 	// byte order in mem = 02 04 // upper opcode for rts(32) == 0x0402
 	// full opcode byte order in mem for rts = 4F 19 02 04

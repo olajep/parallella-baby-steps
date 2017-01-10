@@ -38,9 +38,18 @@ fi
 
 PROG_NM=prog_11
 
+# ==================================
 # Build HOST side application
-${CROSS_COMPILE}gcc src/${PROG_NM}.c -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le-hal -le-loader 
+cd src
+${CROSS_COMPILE}gcc -c prt_call_stack.c
+${CROSS_COMPILE}gcc -c ${PROG_NM}.c ${EINCS} ${ELIBS} 
+cd ..
+${CROSS_COMPILE}gcc src/prt_call_stack.o src/${PROG_NM}.o -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le-hal -le-loader 
 
+# ${CROSS_COMPILE}gcc src/${PROG_NM}.c -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le-hal -le-loader 
+
+
+# ==================================
 # Build DEVICE side program -ffreesstanding -nostdlib -nostartfiles
 # e-gcc -T ${ELDF} src/e_${PROG_NM}.c -o bin/e_${PROG_NM}.elf -le-lib 
 

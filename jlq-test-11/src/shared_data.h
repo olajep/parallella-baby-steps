@@ -128,6 +128,8 @@ bj_get_call_stack_trace(uint16_t sz, void** trace);
 void 
 bj_abort(uint32_t err);
 
+int 
+bj_prt_call_stack(const char *elf_nm, int addrs_sz, void** stack_addrs);
 	
 #ifdef __cplusplus
 }
