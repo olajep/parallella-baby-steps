@@ -5,14 +5,14 @@
 #ifndef BJ_SHARED_DATA_H
 #define BJ_SHARED_DATA_H
 
+#include <inttypes.h>
+#include "attribute.h"
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include <inttypes.h>
-
-#include "attribute.h"
 	
 //======================================================================
 // global constants
@@ -101,6 +101,8 @@ struct bj_in_core_shared_data_def {
 	uint16_t find_err2;
 	uint16_t find_err3;
 	e_coreid_t the_coreid;
+	uint8_t 	cpp_fun1;
+	uint8_t 	cpp_dcla1;
 };
 typedef struct bj_in_core_shared_data_def bj_in_core_st;
 

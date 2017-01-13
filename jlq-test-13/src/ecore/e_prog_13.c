@@ -5,6 +5,7 @@
 
 #include "shared_data.h"
 #include "trace.h"
+#include "test1.h"
 
 //======================================================================
 
@@ -144,6 +145,8 @@ int main(void) {
 	in_core_shd.dbg_progress_flag++;
 	
 	fun7(0.1);
+	
+	cpp_main();
 	
 	bj_set_finished(BJ_FINISHED_VAL);
 	return 0;

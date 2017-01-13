@@ -46,6 +46,8 @@ void prt_shd_mem(bj_in_core_st* sh_dat){
 	printf("find_err1=0x%04x \n", sh_dat->find_err1);
 	printf("find_err2=0x%04x \n", sh_dat->find_err2);
 	printf("find_err3=0x%04x \n", sh_dat->find_err3);
+	printf("cpp_fun1=0x%02x \n", sh_dat->cpp_fun1);
+	printf("cpp_dcla1=0x%02x \n", sh_dat->cpp_dcla1);
 	printf("\n");
 }
 

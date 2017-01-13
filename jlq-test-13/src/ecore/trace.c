@@ -2,6 +2,7 @@
 #include "e_lib.h"
 
 #include "shared_data.h"
+#include "prog.h"
 #include "trace.h"
 
 #define bjk_simm11_up(pt_i16)	(((pt_i16)[1] & 0x00FF) << 3)

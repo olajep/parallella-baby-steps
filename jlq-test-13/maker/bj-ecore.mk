@@ -19,15 +19,23 @@ TGT_POSTMAKE := echo "Finished building "$(TARGET)
 
 TGT_CC := e-gcc
 
+TGT_CXX := e-g++
+
 TGT_LINKER := e-ld
 
-# SRC_CFLAGS := -Wall -std=c11 -nostdlib -nostartfiles
+# -Wall -std=c11 -nostdlib -nostartfiles
 SRC_CFLAGS := -Wall -nostdlib -nostartfiles
+
+# -std=c++11 -nostdlib -fno-exceptions -fno-unwind-tables -fno-rtti -Os
+CXX_FLAGS_1 := -Wall -std=c++11 -nostdlib -fno-exceptions -fno-unwind-tables 
+CXX_FLAGS_2 := -fno-rtti -fno-default-inline -fno-threadsafe-statics 
+SRC_CXXFLAGS := ${CXX_FLAGS_1} ${CXX_FLAGS_2}
 
 SRC_INCDIRS := $(SRC_ECORE_DIR) $(SRC_DIR)/include
 
 SOURCES := \
 	$(SRC_ECORE_DIR)/e_start.s \
+	$(SRC_ECORE_DIR)/test1.cpp \
 	$(SRC_ECORE_DIR)/trace.c \
 	$(SRC_ECORE_DIR)/e_$(NAME_PRG).c 
 

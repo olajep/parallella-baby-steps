@@ -5,15 +5,11 @@
 #define BJK_TRACE_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include <inttypes.h>
 
-extern bj_in_core_st in_core_shd;
-extern bj_off_core_st* off_core_pt;
-	
 uint16_t
 bjk_get_call_stack_trace(uint16_t sz, void** trace);
 
