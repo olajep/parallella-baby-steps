@@ -88,21 +88,15 @@ struct bj_in_core_shared_data_def {
 	uint32_t 	dbg_error_code;
 	uint32_t 	dbg_progress_flag;
 	void** 		dbg_stack_trace;
-	uint16_t* sp_val; 
-	uint16_t* sp_val2; 
-	uint16_t* sp_val3;
-	uint16_t* pc_val;
-	uint16_t* lr_val;
-	uint16_t* lr_val2; 
-	uint16_t* lr_val3; 
-	uint16_t* rts_addr;
-	uint16_t disp; 
-	uint16_t find_err1;
-	uint16_t find_err2;
-	uint16_t find_err3;
+	uint32_t 	dbg_info_wait;
+	uint32_t 	imask40;
+	uint32_t 	status41;
+	uint32_t 	imask42;
+	uint32_t 	status43;
 	e_coreid_t the_coreid;
 	uint8_t 	cpp_fun1;
 	uint8_t 	cpp_dcla1;
+	uint8_t 	got_irq0;
 };
 typedef struct bj_in_core_shared_data_def bj_in_core_st;
 

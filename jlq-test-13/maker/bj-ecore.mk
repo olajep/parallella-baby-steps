@@ -35,6 +35,7 @@ SRC_INCDIRS := $(SRC_ECORE_DIR) $(SRC_DIR)/include
 
 SOURCES := \
 	$(SRC_ECORE_DIR)/e_start.s \
+	$(SRC_ECORE_DIR)/interruptions.c \
 	$(SRC_ECORE_DIR)/test1.cpp \
 	$(SRC_ECORE_DIR)/trace.c \
 	$(SRC_ECORE_DIR)/e_$(NAME_PRG).c 

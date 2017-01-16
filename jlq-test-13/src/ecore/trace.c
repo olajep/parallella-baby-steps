@@ -179,7 +179,6 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 	uint16_t* rts_addr = 0;
 	uint16_t idx = 0;
 	
-	in_core_shd.dbg_progress_flag++;
 	if(sz <= 0){
 		return 0;
 	}
@@ -190,18 +189,15 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 
 	
 	rts_addr = find_rts(pc_val);
-	in_core_shd.rts_addr = rts_addr;
 	while(rts_addr != 0){
 		if(idx == sz){
 			break;
 		}
 		
 		uint16_t disp = get_sp_disp(rts_addr);
-		in_core_shd.disp = disp;
 		if(disp == 0){
 			break;
 		} 
-		in_core_shd.dbg_progress_flag = disp;
 		if((disp % 2) != 0){ // Is disp ever odd?. If so: bad align access ...
 			bjk_abort(BJ_CALL_STACK_TRACE_ERR, sz, trace);
 		}
@@ -219,7 +215,6 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 		// get next pc_val
 		uint32_t aux_v32 = bj_v32_of_p16(sp_val);
 		pc_val = (uint16_t*)aux_v32;
-		in_core_shd.pc_val = pc_val;
 		
 		// add trace call
 		//trace[idx++] = pc_val;
@@ -231,4 +226,24 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 	return idx;
 }
 
-		
+void 
+bjk_wait_sync(uint32_t info, uint16_t sz_trace, void** trace){
+	if(off_core_pt == NULL){
+		bjk_abort(0xbad, sz_trace, trace);
+	}
+	if((sz_trace != 0) && (trace != NULL)){
+		bjk_get_call_stack_trace(sz_trace, trace);
+	}
+	in_core_shd.dbg_info_wait = info;
+	set_shared_var(off_core_pt->is_waiting, 0xaa);
+	uint16_t old_mask = 0;
+	bj_asm("movfs %0, imask" : "=r" (old_mask));
+	bj_asm(
+		"mov r0, #0x3fe" "\n\t"
+		"movts imask, r0" "\n\t"
+		"idle" "\n\t"
+	);
+	bj_asm("movts imask, %0" : : "r" (old_mask));
+	set_shared_var(off_core_pt->is_waiting, 0x0);
+}
+

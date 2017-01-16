@@ -24,12 +24,8 @@ void* 	bjk_dbg_call_stack_trace[BJ_MAX_CALL_STACK_SZ];
 
 //=====================================================================
 
-void user_int_func_1(void);
-
-void bj_naked_fn 
-user_int_func_1(void){
-	bj_asm("rti" "\n\t");
-}
+void 
+set_sync_irq();
 
 //=====================================================================
 
@@ -86,46 +82,6 @@ set_shdat(void) {
 	bj_dbg_set_waiting(BJ_NOT_WAITING_VAL);
 }
 
-void 
-fun0(void) {
-}
-
-void fun1(void) {
-	bjk_get_call_stack_trace(BJ_MAX_CALL_STACK_SZ, bjk_dbg_call_stack_trace);
-	//fun0();
-}
-
-void fun2(int pm1, char pm2, int pm3, char pm4, int8_t pm5, int pm6, int pm7, char pm8) {
-	fun1();
-}
-
-void fun3(void) {
-	fun2(1, 3, 5, 7, 11, 17, 23, 29);
-}
-
-void fun4(int pm1) {
-	fun3();
-}
-
-void fun5(long pm1) {
-	fun4(44);
-}
-
-void fun6(char pm1) {
-	fun5(55);
-}
-
-void fun7(double pm1) {
-	fun6(66);
-}
-
-void fun8() {
-	fun7(1.0);
-}
-
-void fun9() {
-	fun8();
-}
 
 void fun10(int aa, char bb) {
 	
@@ -138,13 +94,23 @@ void fun10(int aa, char bb) {
 	
 }
 
+void fun0(){
+	bjk_wait_sync(0xfe02, BJ_MAX_CALL_STACK_SZ, bjk_dbg_call_stack_trace);
+	in_core_shd.dbg_progress_flag++;
+}
+
 int main(void) {
-	bj_asm("gid");
+	set_sync_irq();
 	in_core_shd.dbg_progress_flag = 0x1;
 	set_shdat();
 	in_core_shd.dbg_progress_flag++;
-	
-	fun7(0.1);
+
+	bjk_wait_sync(0xfe01, BJ_MAX_CALL_STACK_SZ, bjk_dbg_call_stack_trace);
+	in_core_shd.dbg_progress_flag++;
+	//fun7(0.1);
+	fun0();
+	bjk_wait_sync(0xfe03, BJ_MAX_CALL_STACK_SZ, bjk_dbg_call_stack_trace);
+	in_core_shd.dbg_progress_flag++;
 	
 	cpp_main();
 	

@@ -9,6 +9,7 @@
 
 #include <e-hal.h>
 #include <e-loader.h>
+#include <epiphany-hal-api-local.h>
 
 #include "shared_data.h"
 
@@ -33,19 +34,11 @@ void prt_stack_trace(void** trace){
 
 void prt_shd_mem(bj_in_core_st* sh_dat){
 	printf("InCORE 0x%03x \n", sh_dat->the_coreid);
-	printf("progress_flag=0x%08x \n", sh_dat->dbg_progress_flag);
-	printf("sp_val=%p \n", sh_dat->sp_val);
-	printf("sp_val2=%p \n", sh_dat->sp_val2);
-	printf("sp_val3=%p \n", sh_dat->sp_val3);
-	printf("pc_val=%p \n", sh_dat->pc_val);
-	printf("lr_val=%p \n", sh_dat->lr_val);
-	printf("lr_val2=%p \n", sh_dat->lr_val2);
-	printf("lr_val3=%p \n", sh_dat->lr_val3);
-	printf("rts_addr=%p \n", sh_dat->rts_addr);
-	printf("disp=%u \n", sh_dat->disp);
-	printf("find_err1=0x%04x \n", sh_dat->find_err1);
-	printf("find_err2=0x%04x \n", sh_dat->find_err2);
-	printf("find_err3=0x%04x \n", sh_dat->find_err3);
+	printf("dbg_progress_flag=0x%08x \n", sh_dat->dbg_progress_flag);
+	printf("dbg_info_wait=0x%08x \n", sh_dat->dbg_info_wait);
+	
+	printf("got_irq0=0x%02x \n", sh_dat->got_irq0);
+	
 	printf("cpp_fun1=0x%02x \n", sh_dat->cpp_fun1);
 	printf("cpp_dcla1=0x%02x \n", sh_dat->cpp_dcla1);
 	printf("\n");
@@ -142,6 +135,7 @@ int main(int argc, char *argv[])
 			printf("core_dat_pt=%p \n", sh_dat_1.core_data);
 
 			bj_in_core_st inco;
+			void* 	trace[BJ_MAX_CALL_STACK_SZ];
 			
 			// wait for finish
 			uint8_t  finished = BJ_NOT_FINISHED_VAL;
@@ -152,10 +146,32 @@ int main(int argc, char *argv[])
 				printf("Type enter\n");
 				getchar();
 				memset(&inco, 0, sizeof(bj_in_core_st));
-				e_read(&dev, row, col, (uint32_t)sh_dat_1.core_data, 
-						&inco, sizeof(inco));
+				e_read(&dev, row, col, (uint32_t)sh_dat_1.core_data, &inco, sizeof(inco));
 				prt_shd_mem(&inco);
 				*/
+				if(sh_dat_1.is_waiting){
+					int SYNC = (1 << E_SYNC);
+					printf("CORE (%d, %d) WAITING. Type enter\n", row, col);
+					int chr1 = getchar();
+					
+					if(chr1 == 'g'){
+						printf("GO\n");
+					}
+					
+					memset(&inco, 0, sizeof(bj_in_core_st));
+					e_read(&dev, row, col, (uint32_t)sh_dat_1.core_data, &inco, sizeof(inco));
+					prt_shd_mem(&inco);
+					
+					memset(trace, 0, sizeof(trace));
+					e_read(&dev, row, col, (uint32_t)inco.dbg_stack_trace, trace, sizeof(trace));
+					bjh_prt_call_stack(epiphany_elf_nm, BJ_MAX_CALL_STACK_SZ, trace);
+					
+					sh_dat_1.is_waiting = 0;
+					if (ee_write_reg(&dev, row, col, E_REG_ILATST, SYNC) == E_ERR) {
+						printf("ERROR sending SYNC to (%d, %d) \n", row, col);
+						break;
+					}
+				}
 			}
 			if(sh_dat_1.is_finished != BJ_FINISHED_VAL){
 				printf("ERROR with finished flag \n");
@@ -171,7 +187,6 @@ int main(int argc, char *argv[])
 				break;
 			}
 			
-			void* 	trace[BJ_MAX_CALL_STACK_SZ];
 			memset(trace, 0, sizeof(trace));
 			e_read(&dev, row, col, (uint32_t)inco.dbg_stack_trace, trace, sizeof(trace));
 			//prt_stack_trace(trace);
