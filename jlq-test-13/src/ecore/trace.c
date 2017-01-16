@@ -234,16 +234,26 @@ bjk_wait_sync(uint32_t info, uint16_t sz_trace, void** trace){
 	if((sz_trace != 0) && (trace != NULL)){
 		bjk_get_call_stack_trace(sz_trace, trace);
 	}
-	in_core_shd.dbg_info_wait = info;
-	set_shared_var(off_core_pt->is_waiting, 0xaa);
+	// save old_mask
 	uint16_t old_mask = 0;
+	bj_asm("gid" "\n\t");
 	bj_asm("movfs %0, imask" : "=r" (old_mask));
 	bj_asm(
 		"mov r0, #0x3fe" "\n\t"
 		"movts imask, r0" "\n\t"
-		"idle" "\n\t"
 	);
+	in_core_shd.dbg_info_wait = info;
+	set_shared_var(off_core_pt->is_waiting, 0xaa);
+	bj_asm("gie" "\n\t");
+	
+	// wait for SYNC
+	bj_asm("idle" "\n\t");
+	
+	
+	// restore old_mask
+	bj_asm("gid" "\n\t");
 	bj_asm("movts imask, %0" : : "r" (old_mask));
 	set_shared_var(off_core_pt->is_waiting, 0x0);
+	bj_asm("gie" "\n\t");
 }
 
