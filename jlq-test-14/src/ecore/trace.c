@@ -130,6 +130,11 @@ find_rts(uint16_t* code_addr){
 			bjk_trace_err = 0xeee;
 			break;
 		}
+		if((addr[0] == 0x01d2) && (addr[1] == 0x01d2)){	
+			// found personal ending interruption "rti rti" pattern
+			addr = code_addr;
+			break;
+		}
 		addr++;
 	}
 	if(addr == max_addr){

@@ -13,25 +13,38 @@ extern "C"
 {
 #endif
 
-	
-//======================================================================
-// global constants
-
-#define BJ_NUM_CORES 16
-#define BJ_NUM_ROWS 4
-#define BJ_NUM_COLS 4
+struct bj_e3_sys_def { 
+	uint16_t 	xx;		// absolute xx epiphany III space coordinates
+	uint16_t 	yy;		// absolute yy epiphany III space coordinates
+	uint16_t 	xx_sz;		// this running sys number of ekores in xx axis (sys length)
+	uint16_t 	yy_sz;		// this running sys number of ekores in yy axis (sys witdh)
+};
+typedef struct bj_e3_sys_def bj_e3_sys_st;
 	
 //======================================================================
 // convertion functions
+	
+// xx and yy are absolute epiphany 3 space coordinates
+// ro and co are relative epiphany 3 space coordinates with respect to the 
+// 		allocated running cores (bj_glb_sys)
+// id is the coreid absolute in epiphany 3 space 
+// nn is a consec with respect to the allocated running cores (bj_glb_sys)
 
-#define bj_coreid_to_row(coreid)	(((coreid) >> 6) & 0x3f)
-#define bj_coreid_to_col(coreid)	((coreid) & 0x3f)
-#define bj_rowcol_to_consec(row, col) (((row) * BJ_NUM_COLS) + (col))
-#define bj_rowcol_to_coreid(row, col) (((row) << 6) + (col))
-#define bj_consec_to_row(consec)	((consec) / BJ_NUM_COLS)
-#define bj_consec_to_col(consec)	((consec) % BJ_NUM_COLS)
-#define bj_coreid_to_consec(coreid)	(bj_rowcol_to_consec(bj_coreid_to_row(coreid), bj_coreid_to_col(coreid)))
-#define bj_consec_to_coreid(consec)	(bj_rowcol_to_coreid(bj_consec_to_row(coreid), bj_consec_to_col(coreid)))
+#define bj_e3_id_to_xx(id)	(((id) >> 6) & 0x3f)
+#define bj_e3_id_to_yy(id)	((id) & 0x3f)
+#define bj_e3_xx_to_ro(xx)	((xx) - ((bj_glb_sys)->xx))
+#define bj_e3_yy_to_co(yy)	((yy) - ((bj_glb_sys)->yy))
+#define bj_e3_id_to_ro(id)	bj_e3_xx_to_ro(bj_e3_id_to_xx(id))
+#define bj_e3_id_to_co(id)	bj_e3_yy_to_co(bj_e3_id_to_yy(id))
+#define bj_e3_ro_to_xx(ro)	((ro) + ((bj_glb_sys)->xx))
+#define bj_e3_co_to_yy(co)	((co) + ((bj_glb_sys)->yy))
+#define bj_e3_ro_co_to_nn(ro, co) (((ro) * ((bj_glb_sys)->yy_sz)) + (co))
+#define bj_e3_xx_yy_to_id(xx, yy) (((xx) << 6) + (yy))
+#define bj_e3_ro_co_to_id(ro, co) ((bj_e3_ro_to_xx(ro) << 6) + bj_e3_co_to_yy(co))
+#define bj_e3_nn_to_ro(nn)	((nn) / ((bj_glb_sys)->yy_sz))
+#define bj_e3_nn_to_co(nn)	((nn) % ((bj_glb_sys)->yy_sz))
+#define bj_e3_id_to_nn(id) (bj_e3_ro_co_to_nn(bj_e3_id_to_ro(id), bj_e3_id_to_co(id)))
+#define bj_e3_nn_to_id(nn) (bj_e3_ro_co_to_id(bj_e3_nn_to_ro(id), bj_e3_nn_to_co(id)))
 
 //======================================================================
 // sane alignment/access functions
@@ -85,10 +98,14 @@ bj_v32_of_p16(uint16_t* p16){
 
 struct bj_in_core_shared_data_def { 
 	uint32_t 	magic_id;
+	
+	bj_e3_sys_st dev;
+	
 	uint32_t 	dbg_error_code;
 	uint32_t 	dbg_progress_flag;
 	void** 		dbg_stack_trace;
 	uint32_t 	dbg_info_wait;
+	
 	uint32_t 	imask40;
 	uint32_t 	status41;
 	uint32_t 	imask42;

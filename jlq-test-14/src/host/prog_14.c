@@ -44,10 +44,12 @@ void prt_shd_mem(bj_in_core_st* sh_dat){
 	printf("\n");
 }
 
+/*
 uint64_t 
 get_num_core(unsigned coreid){
-	return bj_coreid_to_consec(coreid);
+	return bj_e3_id_to_nn(coreid);
 }
+*/
 
 int main(int argc, char *argv[])
 {
@@ -103,8 +105,8 @@ int main(int argc, char *argv[])
 			e_start(&dev, row, col);
 			
 			// Wait for core program execution to finish.
-			uint16_t num_core = get_num_core(coreid);
-			printf("Waiting for num_core=%2u\n", num_core);
+			//uint16_t num_core = get_num_core(coreid);
+			//printf("Waiting for num_core=%2u\n", num_core);
 			
 			uint32_t offset = 0x0;
 			//uint32_t offset = (sizeof(bj_off_core_st) * num_core);

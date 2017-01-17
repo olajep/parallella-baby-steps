@@ -69,6 +69,10 @@ void fun10(int aa, char bb) {
 	
 }
 
+void fun1(int aa, char bb) {
+	
+}
+
 void fun0(){
 	bjk_wait_sync(0xfe02, BJ_MAX_CALL_STACK_SZ, bjk_dbg_call_stack_trace);
 	in_core_shd.dbg_progress_flag++;
