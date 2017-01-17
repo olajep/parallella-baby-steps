@@ -2,10 +2,7 @@
 #include <cstdlib>
 #include <new>
 
-#include "e_lib.h"
-
-#include "shared_data.h"
-#include "prog.h"
+#include "global.h"
 #include "trace.h"
 #include "test1.h"
 

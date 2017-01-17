@@ -32,16 +32,31 @@ void prt_stack_trace(void** trace){
 	printf("]\n");
 }
 
-void prt_shd_mem(bj_in_core_st* sh_dat){
+int prt_shd_mem(bj_in_core_st* sh_dat){
+	if(sh_dat->magic_id != BJ_MAGIC_ID){
+		printf("ERROR with inco.magic_id (0x%08x)\n", sh_dat->magic_id);
+		return 1;
+	}
+	if(sh_dat->magic_end != BJ_MAGIC_END){
+		printf("ERROR with inco.magic_end (0x%08x)\n", sh_dat->magic_end);
+		return 1;
+	}
 	printf("InCORE 0x%03x \n", sh_dat->the_coreid);
 	printf("dbg_progress_flag=0x%08x \n", sh_dat->dbg_progress_flag);
 	printf("dbg_info_wait=0x%08x \n", sh_dat->dbg_info_wait);
+
+	printf("pc_val=%p \n", sh_dat->pc_val);
+	printf("rts_addr=%p \n", sh_dat->rts_addr);
+	printf("call_addr=%p \n", sh_dat->call_addr);
+	printf("disp=%u \n", sh_dat->disp);
 	
 	printf("got_irq0=0x%02x \n", sh_dat->got_irq0);
 	
 	printf("cpp_fun1=0x%02x \n", sh_dat->cpp_fun1);
 	printf("cpp_dcla1=0x%02x \n", sh_dat->cpp_dcla1);
 	printf("\n");
+	
+	return 0;
 }
 
 /*
@@ -152,22 +167,25 @@ int main(int argc, char *argv[])
 				prt_shd_mem(&inco);
 				*/
 				if(sh_dat_1.is_waiting){
-					int SYNC = (1 << E_SYNC);
+					memset(&inco, 0, sizeof(bj_in_core_st));
+					e_read(&dev, row, col, (uint32_t)(sh_dat_1.core_data), 
+						   &inco, sizeof(inco));
+					int err = prt_shd_mem(&inco);
+					if(err){
+						break;
+					}
+					
+					memset(trace, 0, sizeof(trace));
+					e_read(&dev, row, col, (uint32_t)(inco.dbg_stack_trace), 
+						   trace, sizeof(trace));
+					//prt_stack_trace(trace);
+					bjh_prt_call_stack(epiphany_elf_nm, BJ_MAX_CALL_STACK_SZ, trace);
+					
+					// CONTINUE
 					printf("CORE (%d, %d) WAITING. Type enter\n", row, col);
 					int chr1 = getchar();
 					
-					if(chr1 == 'g'){
-						printf("GO\n");
-					}
-					
-					memset(&inco, 0, sizeof(bj_in_core_st));
-					e_read(&dev, row, col, (uint32_t)sh_dat_1.core_data, &inco, sizeof(inco));
-					prt_shd_mem(&inco);
-					
-					memset(trace, 0, sizeof(trace));
-					e_read(&dev, row, col, (uint32_t)inco.dbg_stack_trace, trace, sizeof(trace));
-					bjh_prt_call_stack(epiphany_elf_nm, BJ_MAX_CALL_STACK_SZ, trace);
-					
+					int SYNC = (1 << E_SYNC);
 					sh_dat_1.is_waiting = 0;
 					if (ee_write_reg(&dev, row, col, E_REG_ILATST, SYNC) == E_ERR) {
 						printf("ERROR sending SYNC to (%d, %d) \n", row, col);
@@ -182,13 +200,11 @@ int main(int argc, char *argv[])
 			printf("Finished\n");
 			memset(&inco, 0, sizeof(bj_in_core_st));
 			e_read(&dev, row, col, (uint32_t)sh_dat_1.core_data, &inco, sizeof(inco));
-			prt_shd_mem(&inco);
-
-			if(inco.magic_id != BJ_MAGIC_ID){
-				printf("ERROR with inco.magic_id \n");
+			int err2 = prt_shd_mem(&inco);
+			if(err2){
 				break;
 			}
-			
+
 			memset(trace, 0, sizeof(trace));
 			e_read(&dev, row, col, (uint32_t)inco.dbg_stack_trace, trace, sizeof(trace));
 			//prt_stack_trace(trace);

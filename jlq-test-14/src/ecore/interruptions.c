@@ -1,9 +1,7 @@
 
-#include "e_lib.h"
-
 #include "attribute.h"
 #include "shared_data.h"
-#include "prog.h"
+#include "global.h"
 
 #pragma GCC diagnostic error "-Wattributes"
 
@@ -81,7 +79,7 @@ user_interruption(void){
 }
 
 void 
-set_sync_irq(){
+bjk_set_sync_irq(){
 	unsigned * ivt = 0x0;
 	*ivt = ((((unsigned)sync_interruption) >> 1) << 8) | B_OPCODE;
 }

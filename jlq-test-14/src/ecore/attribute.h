@@ -18,6 +18,7 @@ extern "C"
 #define bj_naked_fn __attribute__((naked)) 
 #define bj_isr_fn __attribute__((interrupt)) 
 #define bj_asm __asm__ __volatile__
+#define bj_section(sec) __attribute__ ((section (sec)))
 
 	
 #ifdef __cplusplus

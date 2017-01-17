@@ -19,6 +19,8 @@ int bjh_prt_call_stack(const char *elf_nm, int addrs_sz, void** stack_addrs)
 	int          fd;
 	struct stat  st;
 	void        *file;
+	
+	//memset(stack_addrs, 0, addrs_sz * sizeof(void*));
 
 	fd = open(elf_nm, O_RDONLY);
 	if (fd == -1) {

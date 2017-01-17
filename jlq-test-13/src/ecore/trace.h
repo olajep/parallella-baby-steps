@@ -10,6 +10,8 @@ extern "C" {
 
 #include <inttypes.h>
 
+#define bj_null 0x0
+	
 uint16_t
 bjk_get_call_stack_trace(uint16_t sz, void** trace);
 

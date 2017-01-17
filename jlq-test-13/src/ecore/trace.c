@@ -5,6 +5,7 @@
 #include "prog.h"
 #include "trace.h"
 
+
 #define bjk_simm11_up(pt_i16)	(((pt_i16)[1] & 0x00FF) << 3)
 #define bjk_simm11_low(pt_i16)	(((pt_i16)[0] & 0x0380) >> 7)
 #define bjk_simm11_to_uint(pt_i16) (bjk_simm11_up(pt_i16) | bjk_simm11_low(pt_i16))
@@ -156,7 +157,7 @@ bjk_abort(uint32_t err, uint16_t sz_trace, void** trace) {
 		bjk_get_call_stack_trace(sz_trace, trace);
 	}
 	in_core_shd.dbg_error_code = err;
-	if(off_core_pt != NULL){
+	if(off_core_pt != bj_null){
 		set_shared_var(off_core_pt->is_finished, BJ_FINISHED_VAL);
 	}
 	bj_asm("gid");
@@ -170,7 +171,7 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 	// WARNING
 	// This function dissasembles to find RTS calls, next SP disp, and call addrs.
 	// If e-gcc changes the generated code this function MUST be updated.
-	if(trace == NULL){
+	if(trace == bj_null){
 		return 0;
 	}
 	
@@ -228,10 +229,10 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 
 void 
 bjk_wait_sync(uint32_t info, uint16_t sz_trace, void** trace){
-	if(off_core_pt == NULL){
+	if(off_core_pt == bj_null){
 		bjk_abort(0xbad, sz_trace, trace);
 	}
-	if((sz_trace != 0) && (trace != NULL)){
+	if((sz_trace != 0) && (trace != bj_null)){
 		bjk_get_call_stack_trace(sz_trace, trace);
 	}
 	// save old_mask
