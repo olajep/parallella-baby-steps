@@ -27,13 +27,13 @@ void fun1() {
 
 int main(void) {
 	in_core_shd.dbg_progress_flag = 0x1;
-	bj_init_global();
+	bjk_init_global();
 
 	//fun7(0.1);
 	fun1();
 	in_core_shd.dbg_progress_flag++;
 	
-	bj_set_finished(BJ_FINISHED_VAL);
+	bjk_set_finished(BJ_FINISHED_VAL);
 	return 0;
 }
 

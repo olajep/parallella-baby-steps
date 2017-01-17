@@ -5,6 +5,7 @@
 #ifndef BJ_SHARED_DATA_H
 #define BJ_SHARED_DATA_H
 
+#include <stdbool.h>
 #include <inttypes.h>
 #include "attribute.h"
 
@@ -13,6 +14,11 @@ extern "C"
 {
 #endif
 
+//======================================================================
+// epiphany version dependant definitions
+	
+// epiphany III
+	
 #define bj_axis_bits	6
 #define bj_axis_mask	0x3f
 	
@@ -21,6 +27,16 @@ typedef uint16_t bj_coor_t;
 
 typedef uint32_t bj_addr_t;
 
+#define bj_addr_val_in_p16(p16) ((bj_addr_t)(bj_v32_of_p16(p16)))
+
+#define bj_e3_xx 32
+#define bj_e3_yy 8
+#define bj_e3_xx_sz 4
+#define bj_e3_yy_sz 4
+
+//======================================================================
+// working system struct
+	
 #define bj_null 0x0
 
 struct bj_sys_def { 
@@ -30,6 +46,17 @@ struct bj_sys_def {
 	bj_coor_t 	yy_sz;		// this running sys number of ekores in yy axis (sys witdh)
 };
 typedef struct bj_sys_def bj_sys_st;
+
+extern bj_sys_st bj_glb_sys;
+
+void bj_inline_fn
+bj_init_glb_sys() {
+	bj_glb_sys.xx = bj_e3_xx;
+	bj_glb_sys.yy = bj_e3_yy;
+	bj_glb_sys.xx_sz = bj_e3_xx_sz;
+	bj_glb_sys.yy_sz = bj_e3_yy_sz;
+}
+
 	
 //======================================================================
 // convertion functions
@@ -42,20 +69,62 @@ typedef struct bj_sys_def bj_sys_st;
 
 #define bj_id_to_xx(id)	(((id) >> bj_axis_bits) & bj_axis_mask)
 #define bj_id_to_yy(id)	((id) & bj_axis_mask)
-#define bj_xx_to_ro(xx)	((xx) - ((bj_glb_sys)->xx))
-#define bj_yy_to_co(yy)	((yy) - ((bj_glb_sys)->yy))
+#define bj_xx_to_ro(xx)	((xx) - (bj_glb_sys.xx))
+#define bj_yy_to_co(yy)	((yy) - (bj_glb_sys.yy))
 #define bj_id_to_ro(id)	bj_xx_to_ro(bj_id_to_xx(id))
 #define bj_id_to_co(id)	bj_yy_to_co(bj_id_to_yy(id))
-#define bj_ro_to_xx(ro)	((ro) + ((bj_glb_sys)->xx))
-#define bj_co_to_yy(co)	((co) + ((bj_glb_sys)->yy))
-#define bj_ro_co_to_nn(ro, co) (((ro) * ((bj_glb_sys)->yy_sz)) + (co))
+#define bj_ro_to_xx(ro)	((ro) + (bj_glb_sys.xx))
+#define bj_co_to_yy(co)	((co) + (bj_glb_sys.yy))
+#define bj_ro_co_to_nn(ro, co) (((ro) * (bj_glb_sys.yy_sz)) + (co))
 #define bj_xx_yy_to_id(xx, yy) (((xx) << bj_axis_bits) + (yy))
 #define bj_ro_co_to_id(ro, co) ((bj_ro_to_xx(ro) << bj_axis_bits) + bj_co_to_yy(co))
-#define bj_nn_to_ro(nn)	((nn) / ((bj_glb_sys)->yy_sz))
-#define bj_nn_to_co(nn)	((nn) % ((bj_glb_sys)->yy_sz))
+#define bj_nn_to_ro(nn)	((nn) / (bj_glb_sys.yy_sz))
+#define bj_nn_to_co(nn)	((nn) % (bj_glb_sys.yy_sz))
 #define bj_id_to_nn(id) (bj_ro_co_to_nn(bj_id_to_ro(id), bj_id_to_co(id)))
 #define bj_nn_to_id(nn) (bj_ro_co_to_id(bj_nn_to_ro(id), bj_nn_to_co(id)))
 
+#define bj_min_xx_sys (bj_glb_sys.xx)
+#define bj_max_xx_sys ((bj_glb_sys.xx) + (bj_glb_sys.xx_sz))
+#define bj_min_yy_sys (bj_glb_sys.yy)
+#define bj_max_yy_sys ((bj_glb_sys.yy) + (bj_glb_sys.yy_sz))
+
+#define bj_xx_in_sys(xx) (((xx) > bj_min_xx_sys) && ((xx) < bj_max_xx_sys))
+#define bj_yy_in_sys(yy) (((yy) > bj_min_yy_sys) && ((yy) < bj_max_yy_sys))
+#define bj_xx_yy_in_sys(xx, yy) (bj_xx_in_sys(xx) && bj_yy_in_sys(yy))
+
+//======================================================================
+// address functions
+
+#define bj_glb_id_mask	0xfff00000
+#define bj_glb_addr_sz	20
+
+#define bj_addr_mask_id(addr) (((bj_addr_t)(addr)) & bj_glb_id_mask)
+#define bj_addr_is_global(addr) bj_addr_mask_id(addr)
+#define bj_addr_get_coreid(addr) ((bj_id_t)(bj_addr_mask_id(addr) >> bj_glb_addr_sz))
+#define bj_addr_with(id, addr) ((id << bj_glb_addr_sz) | bj_addr_mask_id(addr))
+
+bj_id_t bj_inline_fn
+bjk_get_coreid(void) {
+	bj_id_t koid = 0x0; 
+	bj_asm("movfs %0, coreid" : "=r" (koid));
+	return koid;
+}
+
+bool bj_inline_fn
+bjk_addr_in_core(bj_addr_t addr) {
+	bj_id_t addr_koid = bj_addr_get_coreid(addr);
+	return ((addr_koid == 0) || (addr_koid == bjk_get_coreid()));
+}
+
+bool bj_inline_fn
+bjk_addr_in_sys(bj_addr_t addr) {
+	bj_id_t addr_koid = bj_addr_get_coreid(addr);
+	bj_coor_t xx = bj_id_to_xx(addr_koid);
+	bj_coor_t yy = bj_id_to_yy(addr_koid);
+	return bj_xx_yy_in_sys(xx, yy);
+}
+
+	
 //======================================================================
 // sane alignment/access functions
 

@@ -22,13 +22,13 @@ static void
 get_call_opcode(uint16_t opcode[2], int16_t disp);
 	
 uint16_t*
-find_call(uint16_t* code_addr, uint16_t opcode[2]) link_to_dram;
+find_call(uint16_t* code_addr, uint16_t opcode[2]) bj_outlink_trace;
 
 uint16_t*
-find_rts(uint16_t* code_addr) link_to_dram;
+find_rts(uint16_t* code_addr) bj_outlink_trace;
 	
 int16_t
-get_sp_disp(uint16_t* code_addr) link_to_dram;
+get_sp_disp(uint16_t* code_addr) bj_outlink_trace;
 
 //=====================================================================
 
@@ -139,7 +139,7 @@ find_rts(uint16_t* code_addr){
 		bjk_trace_err = 0x1;
 		return 0;
 	}
-	if(((uint32_t)(addr - code_addr)) < 2){
+	if(((bj_addr_t)(addr - code_addr)) < 2){
 		bjk_trace_err = 0x2;
 		return 0;
 	}
@@ -210,8 +210,8 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 		uint16_t* call_addr = find_call(pc_val, call_opcode);
 
 		// get next pc_val
-		uint32_t aux_v32 = bj_v32_of_p16(sp_val);
-		pc_val = (uint16_t*)aux_v32;
+		bj_addr_t aux_addr = bj_addr_val_in_p16(sp_val);
+		pc_val = (uint16_t*)aux_addr;
 		
 		// add trace call
 		//trace[idx++] = pc_val;

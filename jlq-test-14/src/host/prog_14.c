@@ -94,6 +94,7 @@ int main(int argc, char *argv[])
 	col = 0;
 	//max_row = platform.rows;
 	//max_col = platform.cols;
+	
 	max_row = 1;
 	max_col = 1;
 	for (row=0; row < max_row; row++){
@@ -227,6 +228,8 @@ int main(int argc, char *argv[])
 			*/
 		}
 	}
+	
+	printf("PLATFORM row=%2d col=%2d \n", platform.row, platform.col);
 	
 	// Reset the workgroup
 	e_reset_group(&dev); // FAILS. Why?

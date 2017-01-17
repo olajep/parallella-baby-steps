@@ -15,8 +15,6 @@ can recognize such ending
 
 */
 
-#define B_OPCODE 0x000000e8 // OpCode of the B<*> instruction
-
 void bj_naked_fn 
 sync_interruption(void){
 	in_core_shd.got_irq0++;
@@ -78,15 +76,3 @@ user_interruption(void){
 	bj_asm("rti" "\n\t");
 }
 
-void 
-bjk_set_sync_irq(){
-	unsigned * ivt = 0x0;
-	*ivt = ((((unsigned)sync_interruption) >> 1) << 8) | B_OPCODE;
-}
-
-/*
-	unsigned *ivt;
-	ivt  = (unsigned *) (irq << 2);
-	*ivt = (((unsigned) handler - (unsigned) ivt) >> 1) << 8;
-	*ivt = *ivt | B_OPCODE;
-*/

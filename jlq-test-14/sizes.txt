@@ -29,13 +29,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 loader_cfg    00000010  00000058  00000058  00008028  2**0
                   ALLOC
- 13 .code_dram    000005dc  8e000000  8e000000  00010000  2**2
+ 13 .code_dram    000008dc  8e000000  8e000000  00010000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
  14 .shared_dram  00000010  8f000000  8f000000  00018000  2**3
                   CONTENTS, ALLOC, LOAD, DATA
- 15 .text         00000538  00000100  00000100  00008100  2**2
+ 15 .text         00000284  00000100  00000100  00008100  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 16 .bss          000000a0  00000638  00000638  00008638  2**3
+ 16 .bss          000000a8  00000388  00000388  00008384  2**3
                   ALLOC
  17 .comment      00000028  00000000  00000000  00018010  2**0
                   CONTENTS, READONLY
