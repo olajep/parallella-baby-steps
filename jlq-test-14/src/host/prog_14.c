@@ -21,6 +21,8 @@ int	write_file(char* the_pth, char* the_data, long the_sz, int write_once);
 char before[bj_mem_32K];
 char after[bj_mem_32K];
 
+bj_sys_st bj_glb_sys;
+
 //bj_off_core_st all_cores_copy[BJ_NUM_CORES];
 
 void prt_stack_trace(void** trace){
@@ -265,5 +267,158 @@ write_file(char* the_pth, char* the_data, long the_sz, int write_once){
 	close(fd);
 
 	return 1;
+}
+
+int main2(int argc, char *argv[])
+{
+	const char* epiphany_elf_nm = "e_prog_14.elf";
+	unsigned row, col, max_row, max_col, coreid;
+	e_platform_t platform;
+	e_epiphany_t dev;
+	e_mem_t emem;
+	char f_nm[f_nm_sz];
+	bj_off_core_st shd_mem;
+	
+	e_set_loader_verbosity(H_D0);
+
+	e_init(NULL);
+	e_reset_system();
+	e_get_platform_info(&platform);
+	
+	e_alloc(&emem, buff_offset, sizeof(shd_mem));
+	
+	e_open(&dev, 0, 0, platform.rows, platform.cols);
+
+	bj_glb_sys.xx = dev.row;
+	bj_glb_sys.yy = dev.col;
+	bj_glb_sys.xx_sz = dev.rows;
+	bj_glb_sys.yy_sz = dev.cols;
+
+	
+	e_reset_group(&dev);
+
+	row = 0;
+	col = 0;
+	max_row = platform.rows;
+	max_col = platform.cols;
+	
+	//max_row = 1;
+	//max_col = 1;
+	bool goterr = false;
+	for (row=0; row < max_row; row++){
+		for (col=0; col < max_col; col++){
+			// Print working core 
+			coreid = (row + platform.row) * 64 + col + platform.col;
+			printf("\n\n");
+			printf("eCore 0x%03x (%2d,%2d): \n", coreid, row, col);
+
+			bj_id_t id1 = coreid;
+			bj_id_t id2 = bj_ro_co_to_id(row, col);
+			if(id1 != id2){
+				printf("FAILED 1 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+
+			printf("BJ CoreId= 0x%03x \n", id2);
+			
+			bj_coor_t xx1 = bj_id_to_xx(id2);
+			bj_coor_t yy1 = bj_id_to_yy(id2);
+
+			printf("xx=%d yy=%d \n", xx1, yy1);
+			
+			bj_coor_t ro1 = bj_id_to_ro(id2);
+			bj_coor_t co1 = bj_id_to_co(id2);
+
+			if(ro1 != row){
+				printf("FAILED 2 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			if(co1 != col){
+				printf("FAILED 3 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+
+			bj_coor_t ro2 = bj_xx_to_ro(xx1);
+			bj_coor_t co2 = bj_yy_to_co(yy1);
+
+			if(ro2 != row){
+				printf("FAILED 2 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			if(co2 != col){
+				printf("FAILED 3 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			
+			bj_id_t id3 = bj_xx_yy_to_id(xx1, yy1);
+			if(id1 != id3){
+				printf("FAILED 4 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			
+			bj_consec_t nn1 = bj_ro_co_to_nn(ro1, co1);
+			printf("Consec %d \n", nn1);
+			
+			bj_coor_t ro3 = bj_nn_to_ro(nn1);
+			bj_coor_t co3 = bj_nn_to_co(nn1);
+
+			if(ro3 != row){
+				printf("FAILED 5 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			if(co3 != col){
+				printf("FAILED 6 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			
+			bj_consec_t nn2 = bj_id_to_nn(id3);
+			if(nn1 != nn2){
+				printf("FAILED 7 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			
+			bj_id_t id4 = bj_nn_to_id(nn2);
+			if(id1 != id4){
+				printf("FAILED 8 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+			
+			bool insy = bj_xx_yy_in_sys(xx1, yy1);
+			if(! insy){
+				printf("FAILED 9 (%2d,%2d) \n", row, col);
+				goterr = true;
+				break;
+			}
+		}
+		if(goterr){
+			break;
+		}
+	}
+	
+	printf("PLATFORM row=%2d col=%2d \n", platform.row, platform.col);
+	
+	// Reset the workgroup
+	e_reset_group(&dev); // FAILS. Why?
+	e_reset_system();
+	
+	// Close the workgroup
+	e_close(&dev);
+	
+	// Release the allocated buffer and finalize the
+	// e-platform connection.
+	e_free(&emem);
+	e_finalize();
+
+	return 0;
 }
 
