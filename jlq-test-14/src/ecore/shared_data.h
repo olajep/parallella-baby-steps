@@ -35,7 +35,8 @@ typedef uint32_t bj_addr_t;
 #define bj_e3_xx_sz 4
 #define bj_e3_yy_sz 4
 
-#define bj_glb_id_mask	0xfff00000
+#define bj_glb_id_mask		0xfff00000
+#define bj_glb_addr_mask	0x000fffff
 #define bj_glb_addr_sz	20
 
 //======================================================================
@@ -101,9 +102,11 @@ bj_init_glb_sys() {
 // address functions
 
 #define bj_addr_mask_id(addr) (((bj_addr_t)(addr)) & bj_glb_id_mask)
+#define bj_addr_mask_ad(addr) (((bj_addr_t)(addr)) & bj_glb_addr_mask)
+
 #define bj_addr_is_global(addr) bj_addr_mask_id(addr)
 #define bj_addr_get_coreid(addr) ((bj_id_t)(bj_addr_mask_id(addr) >> bj_glb_addr_sz))
-#define bj_addr_with(id, addr) ((id << bj_glb_addr_sz) | bj_addr_mask_id(addr))
+#define bj_addr_with(id, addr) ((((bj_addr_t)(id)) << bj_glb_addr_sz) | bj_addr_mask_ad(addr))
 
 bj_id_t bj_inline_fn
 bjk_get_coreid(void) {
@@ -222,6 +225,63 @@ typedef struct bj_off_core_shared_data_def bj_off_core_st;
 
 int 
 bjh_prt_call_stack(const char *elf_nm, int addrs_sz, void** stack_addrs);
+
+
+//======================================================================
+// asserts
+
+#define CKOUT_COND(nam, sec, cond, err_code) \
+	{ \
+		__asm__ __volatile__ ( \
+			"gid \n\t" \
+			"mov r60, lr \n\t" \
+			"mov r61, %low(" #nam ") \n\t" \
+			"movt r61, %high(" #nam ") \n\t" \
+			"jalr r61 \n\t" \
+			".section " #sec " \n\t" \
+			".balign 4 \n\t" \
+			".global " #nam " \n" \
+			#nam ": \n\t" \
+		); \
+		if(! (cond)){ \
+			err_code ;\
+		} \
+		__asm__ __volatile__ ( \
+			"mov r61, %low(end_" #nam ") \n\t" \
+			"movt r61, %high(end_" #nam ") \n\t" \
+			"jalr r61 \n\t" \
+			"rts \n\t" \
+			".previous \n\t" \
+			".balign 4 \n\t" \
+			".global end_" #nam " \n" \
+			"end_" #nam ": \n\t" \
+			"mov lr, r60 \n\t" \
+			"gie \n\t" \
+		); \
+	} \
+	
+// end_of_macro
+
+//======================================================================
+// other naked
+
+#define DEF_NAKED_FUNC(nam, prog) \
+void naked_code_starts_at_##nam(){ \
+	__asm__ __volatile__ ( \
+		".section .text \n\t" \
+		".balign 4 \n\t" \
+		".global " #nam " \n" \
+	#nam ": \n\t" \
+	); \
+	prog \
+	__asm__ __volatile__ ( \
+		"trap 0x3 \n\t" \
+	); \
+} \
+	
+// end_of_macro
+
+
 
 
 #ifdef __cplusplus

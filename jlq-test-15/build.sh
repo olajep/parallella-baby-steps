@@ -32,7 +32,7 @@ case $(uname -p) in
 esac
 fi
 
-PROG_NM=prog_3
+PROG_NM=prog_15
 
 # Build HOST side application
 ${CROSS_COMPILE}gcc src/${PROG_NM}.c -o bin/${PROG_NM}.elf ${EINCS} ${ELIBS} -le-hal -le-loader -lpthread
@@ -47,7 +47,7 @@ e-gcc -c e_start.s
 cd ..
 e-ld -T ${ELDF} src/e_${PROG_NM}.o src/e_start.o -o bin/e_${PROG_NM}.elf 
 
-e-objdump -D bin/e_${PROG_NM}.elf > code3.s
+e-objdump -D bin/e_${PROG_NM}.elf > code15.s
 
 
 
