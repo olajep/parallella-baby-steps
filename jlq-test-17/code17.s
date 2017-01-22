@@ -35,10 +35,10 @@ Disassembly of section .text:
  104:	f4ef 2402 	mov fp,sp
  108:	000b 0002 	mov r0,0x0
  10c:	000b 18f2 	movt r0,0x8f00
- 110:	378b 0012 	mov r1,0x1bc
+ 110:	388b 0012 	mov r1,0x1c4
  114:	200b 1002 	movt r1,0x0
  118:	2054      	str r1,[r0]
- 11a:	178b 0012 	mov r0,0x1bc
+ 11a:	188b 0012 	mov r0,0x1c4
  11e:	000b 1002 	movt r0,0x0
  122:	202b 0be2 	mov r1,0xbe01
  126:	214b 1002 	movt r1,0xa
@@ -61,7 +61,7 @@ Disassembly of section .text:
  168:	1ddc 0400 	str r0,[fp,+0x3]
  16c:	1feb 00f2 	mov r0,0xfff
  170:	1ddc 0400 	str r0,[fp,+0x3]
- 174:	178b 0012 	mov r0,0x1bc
+ 174:	188b 0012 	mov r0,0x1c4
  178:	000b 1002 	movt r0,0x0
  17c:	3dcc 0400 	ldr r1,[fp,+0x3]
  180:	2054      	str r1,[r0]
@@ -81,16 +81,22 @@ Disassembly of section .text:
  1aa:	600b 1002 	movt r3,0x0
  1ae:	0d52      	jalr r3
  1b0:	01a2      	nop
- 1b2:	0fe2      	trap 0x3
- 1b4:	01a2      	nop
- 1b6:	2912      	movfs r1,pc
- 1b8:	0552      	jalr r1
- 1ba:	01a2      	nop
+ 1b2:	0192      	gie
+ 1b4:	0fe2      	trap 0x3
+ 1b6:	01a2      	nop
+ 1b8:	2912      	movfs r1,pc
+ 1ba:	0552      	jalr r1
+ 1bc:	01a2      	nop
+ 1be:	01a2      	nop
 
 Disassembly of section .bss:
 
-000001bc <val2>:
- 1bc:	0000      	beq 1bc <val2>
+000001c0 <__FIRST_PROG_VAR__>:
+ 1c0:	0000      	beq 1c0 <__FIRST_PROG_VAR__>
+	...
+
+000001c4 <val2>:
+ 1c4:	0000      	beq 1c4 <val2>
 	...
 
 Disassembly of section .comment:

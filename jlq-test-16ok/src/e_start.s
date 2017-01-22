@@ -1,5 +1,5 @@
 	.file	"e_start.s"
-	.section IVT_RESET
+	.section IVT_RESET, "ax",@progbits
 	.balign 4
 	.global	_start
 _start:
@@ -10,8 +10,7 @@ _start:
 	.global	normal_start
 normal_start:
 	gid
-;	mov sp,0x7ff0
-	mov sp,0xfff
+	mov sp,0x7ff0
 	movt sp,0x0
 	mov fp,0x0
 	mov r0, #0x3ff
@@ -20,7 +19,6 @@ normal_start:
 	movt r3, %high(main)
 	jalr r3
 	nop
-	gie
 	trap 0x3
 	nop
 	movfs r1, pc

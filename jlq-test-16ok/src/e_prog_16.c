@@ -4,7 +4,7 @@
 //======================================================================
 // off chip shared memory
 
-void* shdmem SECTION("shared_dram");
+unsigned shdmem SECTION("shared_dram");
 
 
 //=====================================================================
@@ -13,14 +13,12 @@ void* shdmem SECTION("shared_dram");
 // seems like a bug but this first var does not always gets into .bss
 uint8_t __FIRST_PROG_VAR__ SECTION(".bss");
 
-unsigned val2 SECTION(".bss");
-//unsigned aux SECTION(".bss"); // IF DECLARED HERE IT WORKS (val2 == 0xfff) !!
+//unsigned aux; // IF DECLARED HERE IT WORKS (val2 == 0xfff) !!
+unsigned val2;
 		
 void main(void) {
-	shdmem = &val2;
-	val2 = 0xabe01;
-	
-	unsigned xx1 = 0x98ab12;	
+	val2 = 0xabe00;
+	unsigned xx1 = 0xabe01;	
 	unsigned xx2 = 0xabe02;
 	unsigned aux;
 	aux = 0xaaa;
@@ -34,11 +32,12 @@ void main(void) {
 	
 	val2 = aux;		// Without this line it get the spected value 0xabe00
 	
-	// WHY DOES val2 DOES NOT GET get the value 0xfff ??????? !!!!!!
-	// 
-	// LOOK AT THE GENERATED ASSEMBLER (file 'code17.s').
+	// WHY DOES val2 get the value 0xddd ??????? !!!!!!
+	// LOOK AT THE GENERATED ASSEMBLER (file 'code16.s').
 	// Is it only my parallella board?
 	// Do you get the same result?
 	
+	shdmem = val2;
+	__asm__ __volatile__ ("trap 0x3");	// DO NOT DO ANY THING ELSE
 }
 

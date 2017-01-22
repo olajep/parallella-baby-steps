@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	char emsg[buff_sz];
 	char f_nm[f_nm_sz];
 	
-	void* shdat;
+	unsigned shdat;
 	
 	e_set_loader_verbosity(H_D0);
 
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	e_reset_group(&dev);
 
 	// Load the device program onto all the eCores
-	e_load_group("e_prog_17.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
+	e_load_group("e_prog_16.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 	
 	printf("Starting sizeof(unsigned)=%d \n", sizeof(unsigned));
 
@@ -74,18 +74,9 @@ int main(int argc, char *argv[])
 			usleep(10000);
 
 			// Read message from shared data
-			shdat = (void*)0xadd0fea;
-			e_read(&emem, -1, 0, 0x0, &shdat, sizeof(shdat));
-			printf("SHDAT=%p \n\n", shdat);
-
-			if((shdat != (void*)0xadd0fea) && (((uint32_t)shdat) < 0x7ff0)){
-				unsigned val2 = 0xabcdabcd;
-				e_read(&dev, row, col, (uint32_t)shdat, &val2, sizeof(val2));
-				printf("val2=0x%08x \n\n", val2);
-			} else {
-				printf("SHDAT TOO BIG ! \n\n");
-			}
-
+			shdat = 0xfea;
+			e_read(&emem, 0, 0, 0x0, &shdat, sizeof(shdat));
+			printf("SHDAT=0x%03x \n\n", shdat);
 		}
 	}
 	printf("Ending \n");
