@@ -1,5 +1,9 @@
 	.file	"e_start.s"
 	.section IVT_RESET
+; THIS IS THE MISTAKE !!!! 
+; SHOULD BE
+;	.section IVT_RESET, "ax",@progbits
+; OTHER WISE b normal_start does NOT GET EXECUTED
 	.balign 4
 	.global	_start
 _start:

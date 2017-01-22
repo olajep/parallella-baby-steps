@@ -1,16 +1,20 @@
 	.file	"e_start.s"
-.section	shared_dram,"aw",@progbits
+;
+	.section	shared_dram,"aw",@progbits
 	.global	the_core_id
 	.balign 4
 	.type	the_core_id, @object
 	.size	the_core_id, 4
 the_core_id:
 	.zero	4
-.section IVT_RESET, "ax",@progbits
+;
+	.section IVT_RESET, "ax",@progbits
+	.balign 4
 	.global	_start
 _start:
 	b normal_start
-.section .text
+;
+	.section .text
 	.global	normal_start
 	.balign 4
 normal_start:
