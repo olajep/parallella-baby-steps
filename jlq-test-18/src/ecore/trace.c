@@ -151,9 +151,9 @@ bjk_abort(uint32_t err, uint16_t sz_trace, void** trace) {
 	if(err != BJ_CALL_STACK_TRACE_ERR){
 		bjk_get_call_stack_trace(sz_trace, trace);
 	}
-	in_core_shd.dbg_error_code = err;
-	if(off_core_pt != bj_null){
-		set_off_chip_var(off_core_pt->is_finished, BJ_FINISHED_VAL);
+	bj_in_core_shd.dbg_error_code = err;
+	if(bj_off_core_pt != bj_null){
+		set_off_chip_var(bj_off_core_pt->is_finished, BJ_FINISHED_VAL);
 	}
 	bj_asm("gid");
 	bj_asm("trap 0x3");
@@ -225,7 +225,7 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 
 void 
 bjk_wait_sync(uint32_t info, uint16_t sz_trace, void** trace){
-	if(off_core_pt == bj_null){
+	if(bj_off_core_pt == bj_null){
 		bjk_abort(0xbad, sz_trace, trace);
 	}
 	if((sz_trace != 0) && (trace != bj_null)){
@@ -239,8 +239,8 @@ bjk_wait_sync(uint32_t info, uint16_t sz_trace, void** trace){
 		"mov r0, #0x3fe" "\n\t"
 		"movts imask, r0" "\n\t"
 	);
-	in_core_shd.dbg_info_wait = info;
-	set_off_chip_var(off_core_pt->is_waiting, BJ_WATING_VAL);
+	bj_in_core_shd.dbg_info_wait = info;
+	set_off_chip_var(bj_off_core_pt->is_waiting, BJ_WATING_VAL);
 	bj_asm("gie" "\n\t");
 	
 	// wait for SYNC
@@ -250,7 +250,7 @@ bjk_wait_sync(uint32_t info, uint16_t sz_trace, void** trace){
 	// restore old_mask
 	bj_asm("gid" "\n\t");
 	bj_asm("movts imask, %0" : : "r" (old_mask));
-	set_off_chip_var(off_core_pt->is_waiting, BJ_NOT_WAITING_VAL);
+	set_off_chip_var(bj_off_core_pt->is_waiting, BJ_NOT_WAITING_VAL);
 	bj_asm("gie" "\n\t");
 }
 

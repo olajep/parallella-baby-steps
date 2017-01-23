@@ -38,11 +38,11 @@ struct cla1{
 
 void
 cla1::fun1(){
-	in_core_shd.cpp_fun1 = 0xbb;
+	bj_in_core_shd.cpp_fun1 = 0xbb;
 }
 
 cla1::~cla1(){
-	in_core_shd.cpp_dcla1 = 0xdd;
+	bj_in_core_shd.cpp_dcla1 = 0xdd;
 }
 
 void

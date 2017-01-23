@@ -23,10 +23,8 @@ extern uint8_t __FIRST_PROG_VAR__;
 
 extern void* 	bjk_dbg_call_stack_trace[BJ_MAX_CALL_STACK_SZ];
 
-extern bj_off_core_st* off_core_pt;
-extern bj_in_core_st in_core_shd;
-
-extern uint32_t aux_val; 
+extern bj_off_core_st* bj_off_core_pt;
+extern bj_in_core_st bj_in_core_shd;
 
 extern uint16_t bjk_trace_err;
 
@@ -43,12 +41,14 @@ bj_memset(uint8_t* bytes, uint8_t val, uint32_t sz);
 
 void bj_inline_fn
 bjk_set_finished(uint8_t val) {
-	set_off_chip_var(off_core_pt->is_finished, val);
+	set_off_chip_var(bj_off_core_pt->is_finished, val);
 }
 
 void 
 bjk_init_global(void) bj_outlink_global;
 
+void 
+abort(void) bj_outlink_global;		// Needed when -Os flag is set
 
 //======================================================================
 // bj_asserts
@@ -92,7 +92,24 @@ bjk_init_global(void) bj_outlink_global;
 	
 // end_of_macro
 
-//define BJ_IN_ASSERT(nam, sec, cond) 
+#define BJ_INCORE_ASSERT(nam, cond) \
+	if(! (cond)){ \
+		bj_addr_t nm_addr; \
+		bj_asm( \
+			".global " #nam " \n" \
+			#nam ": \n\t" \
+			"mov r61, %low(" #nam ") \n\t" \
+			"movt r61, %high(" #nam ") \n\t" \
+		); \
+		bj_asm("mov %0, r61" : "=r" (nm_addr)); \
+		bjk_abort(nm_addr, BJ_MAX_CALL_STACK_SZ, bjk_dbg_call_stack_trace); \
+	} \
+
+// end_of_macro
+
+#define BJ_CK(nam, cond) BJ_OFFCHIP_ASSERT(nam, code_dram, cond)
+
+#define BJ_CK2(nam, cond) BJ_INCORE_ASSERT(nam, cond)
 
 
 //======================================================================
@@ -115,7 +132,6 @@ bjk_init_global(void) bj_outlink_global;
 	); \
 
 // end_of_macro
-
 
 #ifdef __cplusplus
 }

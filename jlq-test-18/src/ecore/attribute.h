@@ -14,12 +14,13 @@ extern "C"
 
 // Use with static when needed
 
+#define bj_opt_sz_fn __attribute__((optimize("Os")))
+#define bj_no_opt_fn __attribute__((optimize("O0")))
 #define bj_inline_fn inline __attribute__((always_inline)) 
 #define bj_naked_fn __attribute__((naked)) 
 #define bj_isr_fn __attribute__((interrupt)) 
 #define bj_asm __asm__ __volatile__
 #define bj_section(sec) __attribute__ ((section (sec)))
-
 	
 #ifdef __cplusplus
 }
