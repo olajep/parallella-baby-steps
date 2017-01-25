@@ -35,10 +35,25 @@ void fun1() {
 int main(void) {
 	bjk_init_global();
 
-	uint32_t aa = 0xaaa;
-	uint32_t aa2 = 0xaaa;
+	//BJ_CK(ck_01, (aa != aa2));
 	
-	BJ_CK(ck_01, (aa != aa2));
+	bj_id_t koid = bjk_get_coreid();
+	bj_addr_t addr_r63 = bj_addr_with(koid, 0xf00fc);
+	uint32_t* pt_reg = (uint32_t*)addr_r63;
+	
+	bj_in_core_shd.val_reg1 = 0xabe01;
+	bj_in_core_shd.val_reg2 = 0xabe02;
+	/*
+	//uint32_t vreg = *pt_reg;
+	//bj_in_core_shd.val_reg2 = vreg;
+
+	bj_asm("mov r21, 0xaaaa");
+	bj_asm("movt r21, 0xbbbb");
+	bj_asm("mov r20, 0x00fc");
+	bj_asm("movt r20, 0x000f");
+	//bj_asm("ldr r21, [r20]");
+	bj_asm("mov %0, r21" : "=r" (bj_in_core_shd.val_reg2));
+	*/
 	
 	bj_in_core_shd.dbg_progress_flag = 0xeee;
 	

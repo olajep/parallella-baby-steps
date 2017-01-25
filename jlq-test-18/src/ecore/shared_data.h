@@ -35,6 +35,8 @@ typedef uint32_t bj_addr_t;
 #define bj_e3_xx_sz 4
 #define bj_e3_yy_sz 4
 
+#define bj_e3_num_cores 16
+
 #define bj_glb_id_mask		0xfff00000
 #define bj_glb_addr_mask	0x000fffff
 #define bj_glb_addr_sz	20
@@ -43,8 +45,11 @@ typedef uint32_t bj_addr_t;
 // working system struct
 	
 #define bj_null 0x0
+#define bj_align(aa)	__attribute__ ((aligned (aa)))
 
-struct bj_sys_def { 
+#define bj_sys_num_cores bj_e3_num_cores
+
+struct bj_align(8) bj_sys_def { 
 	bj_coor_t 	xx;		// absolute xx epiphany space coordinates
 	bj_coor_t 	yy;		// absolute yy epiphany space coordinates
 	bj_coor_t 	xx_sz;		// this running sys number of ekores in xx axis (sys length)
@@ -62,6 +67,18 @@ bj_init_glb_sys() {
 	bj_glb_sys.yy_sz = bj_e3_yy_sz;
 }
 
+void bj_inline_fn
+bj_init_glb_sys_with(bj_coor_t xx_val, bj_coor_t yy_val, bj_coor_t xx_sz_val, bj_coor_t yy_sz_val){
+	bj_glb_sys.xx = xx_val;
+	bj_glb_sys.yy = yy_val;
+	bj_glb_sys.xx_sz = xx_sz_val;
+	bj_glb_sys.yy_sz = yy_sz_val;
+}
+
+#define bjh_init_glb_sys_with_dev(dev) \
+	bj_init_glb_sys_with((dev)->row, (dev)->col, (dev)->rows, (dev)->cols)
+	
+// end_of_macro
 	
 //======================================================================
 // convertion functions
@@ -106,7 +123,7 @@ bj_init_glb_sys() {
 
 #define bj_addr_is_global(addr) bj_addr_mask_id(addr)
 #define bj_addr_get_coreid(addr) ((bj_id_t)(bj_addr_mask_id(addr) >> bj_glb_addr_sz))
-#define bj_addr_with(id, addr) ((((bj_addr_t)(id)) << bj_glb_addr_sz) | bj_addr_mask_ad(addr))
+#define bj_addr_with(id, addr) ((bj_addr_t)((((bj_addr_t)(id)) << bj_glb_addr_sz) | bj_addr_mask_ad(addr)))
 
 bj_id_t bj_inline_fn
 bjk_get_coreid(void) {
@@ -174,7 +191,7 @@ bj_v32_of_p16(uint16_t* p16){
 #define max_ptrs 16
 #define max_16bit_idx   8192
 
-#define BJ_MAGIC_ID 0xabcd9876
+#define BJ_MAGIC_ID 0xaabbccdd
 #define BJ_MAGIC_END 0x6789abcd
 
 #define BJ_ABORT_ERR 				0xdeadbeaf
@@ -182,15 +199,18 @@ bj_v32_of_p16(uint16_t* p16){
 
 #define BJ_MAX_CALL_STACK_SZ	20
 
-struct bj_in_core_shared_data_def { // CAREFUL !! sometimes aligment(ekore) != aligment(host)
+struct bj_align(8) bj_in_core_shared_data_def { // CAREFUL !! sometimes aligment(ekore) != aligment(host)
 	uint32_t 	magic_id;
 	void** 		dbg_stack_trace;
-	
-	bj_sys_st 	dev;
 	
 	uint32_t 	dbg_error_code;
 	uint32_t 	dbg_progress_flag;
 	uint32_t 	dbg_info_wait;
+	
+	bj_sys_st* 	curr_sys;
+	
+	uint32_t 	val_reg1;
+	uint32_t 	val_reg2;
 
 	uint16_t* pc_val;
 	uint16_t* rts_addr;
@@ -212,7 +232,7 @@ typedef struct bj_in_core_shared_data_def bj_in_core_st;
 #define BJ_NOT_WAITING_VAL 	0x0
 #define BJ_WATING_VAL 		0xaa
 
-struct bj_off_core_shared_data_def { 
+struct bj_align(8) bj_off_core_shared_data_def { 
 	uint32_t 	magic_id;
 	bj_id_t		the_coreid;
 	uint8_t 	is_finished;
@@ -221,7 +241,13 @@ struct bj_off_core_shared_data_def {
 };
 typedef struct bj_off_core_shared_data_def bj_off_core_st;
 
-// off_core_st all_cores[];
+struct bj_align(8) bj_off_sys_shared_data_def { 
+	uint32_t 		magic_id;
+	uint32_t 		dbg_error_code;
+	bj_sys_st 		wrk_sys;
+	bj_off_core_st 	sys_cores[bj_sys_num_cores];
+};
+typedef struct bj_off_sys_shared_data_def bj_off_sys_st;
 
 int 
 bjh_prt_call_stack(const char *elf_nm, int addrs_sz, void** stack_addrs);

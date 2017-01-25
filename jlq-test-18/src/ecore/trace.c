@@ -69,6 +69,32 @@ find_call(uint16_t* code_addr, uint16_t opcode[2]){
 	return addr;
 }
 
+/*
+ 1d0:	14fc 0500 	strd r0,[sp,-0x1]
+ 1d4:	0512      	movfs r0,status
+ 1d6:	211f 0402 	movfs r1,iret
+*/
+uint16_t*
+find_interrupt_call(uint16_t* code_addr){
+	uint16_t* addr = code_addr;
+	bjk_trace_err = 0x0;
+	while(addr > 0x0){
+		if(	(addr[0] == 0x14fc) && (addr[1] == 0x0500) && (addr[2] == 0x0512) &&
+			(addr[3] == 0x211f) && (addr[4] == 0x0402)
+		){
+			bjk_trace_err = 0x2eee;
+			break;
+		}
+		if((addr[0] == 0x194f) && (addr[1] == 0x0402)){	// should not find any rts
+			bjk_trace_err = 0x21;
+			addr = 0;
+			break;
+		}
+		addr--;
+	}
+	return addr;
+}
+
 int16_t
 get_sp_disp(uint16_t* code_addr){
 	uint16_t* addr = code_addr;
@@ -81,11 +107,11 @@ get_sp_disp(uint16_t* code_addr){
 	// byte order in mem = 0b b0 is lower val for add(32)_sp_sp == 0xb00b
 	// byte order in mem = 00 24 // upper val for add(32)_sp_sp == 0x2400
 	if((v0 & 0xF00F) != 0xb00b){
-		bjk_trace_err = 0x3;
+		bjk_trace_err = 0x31;
 		return 0;
 	}
 	if((v1 & 0xFF00) != 0x2400){
-		bjk_trace_err = 0x4;
+		bjk_trace_err = 0x32;
 		return 0;
 	}
 	
@@ -98,19 +124,26 @@ get_sp_disp(uint16_t* code_addr){
 	// byte order in mem = 0c d0 is lower val for ldrd(32)_lr_sp == 0xd00c
 	// byte order in mem = 00 20 // upper val for ldrd(32)_lr_sp == 0x2000
 	if((v0 & 0xF00F) != 0xd00c){
-		bjk_trace_err = 0x6;
+		bjk_trace_err = 0x33;
 		return 0;
 	}
 	if((v1 & 0xF000) != 0x2000){
-		bjk_trace_err = 0x7;
+		bjk_trace_err = 0x34;
 		return 0;
 	}
 
 	int16_t simm11_int = get_add_simm11(d_addr);
-	bjk_trace_err = 0xeee;
+	bjk_trace_err = 0x3eee;
 	
 	return simm11_int;
 }
+
+/*
+ 2dc:	0502      	movts status,r0
+ 2de:	210f 0402 	movts iret,r1
+ 2e2:	14ec 0500 	ldrd r0,[sp,-0x1]
+ 2e6:	01d2      	rti
+*/
 
 uint16_t*
 find_rts(uint16_t* code_addr){
@@ -125,22 +158,31 @@ find_rts(uint16_t* code_addr){
 	uint16_t* addr = code_addr;
 	while(addr < max_addr){
 		if((addr[0] == 0x194f) && (addr[1] == 0x0402)){
-			bjk_trace_err = 0xeee;
+			bjk_trace_err = 0x4eee;
 			break;
 		}
-		if((addr[0] == 0x01d2) && (addr[1] == 0x01d2)){	
-			// found personal ending interruption "rti rti" pattern
+		if(	(addr[0] == 0x01d2) && 
+			((*(addr - 5)) == 0x0502) &&
+			((*(addr - 4)) == 0x210f) &&
+			((*(addr - 3)) == 0x0402) 
+		)
+		{	
+			// found interruption ending pattern
+			bjk_trace_err = 0x41;
 			addr = code_addr;
 			break;
 		}
 		addr++;
 	}
+	if(bjk_trace_err == 0x41){
+		return 0;
+	}
 	if(addr == max_addr){
-		bjk_trace_err = 0x1;
+		bjk_trace_err = 0x42;
 		return 0;
 	}
 	if(((bj_addr_t)(addr - code_addr)) < 2){
-		bjk_trace_err = 0x2;
+		bjk_trace_err = 0x43;
 		return 0;
 	}
 	return addr;
@@ -152,9 +194,13 @@ bjk_abort(uint32_t err, uint16_t sz_trace, void** trace) {
 		bjk_get_call_stack_trace(sz_trace, trace);
 	}
 	bj_in_core_shd.dbg_error_code = err;
-	if(bj_off_core_pt != bj_null){
+	
+	if((bj_off_core_pt != bj_null) && (bj_off_core_pt->magic_id == BJ_MAGIC_ID)){
 		set_off_chip_var(bj_off_core_pt->is_finished, BJ_FINISHED_VAL);
 	}
+	
+	bj_asm("mov r62, %0" : : "r" (&bj_in_core_shd));
+	bj_asm("mov r63, %0" : : "r" (err));
 	bj_asm("gid");
 	bj_asm("trap 0x3");
 	bj_asm("movfs r0, pc");
@@ -219,6 +265,10 @@ bjk_get_call_stack_trace(uint16_t sz, void** trace) {
 		
 		// find next rts_addr
 		rts_addr = find_rts(pc_val);
+	}
+	if(bjk_trace_err == 0x41){
+		uint16_t* call_addr = find_interrupt_call(pc_val);
+		trace[idx++] = call_addr;
 	}
 	return idx;
 }

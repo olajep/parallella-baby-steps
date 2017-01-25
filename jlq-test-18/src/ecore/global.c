@@ -4,7 +4,7 @@
 //======================================================================
 // off chip shared memory
 
-bj_off_core_st sh_mem bj_section("shared_dram");
+bj_off_sys_st BJK_OFF_CHIP_SHARED_MEM bj_section("shared_dram");
 
 
 
@@ -55,27 +55,39 @@ bjk_set_coreid(void) {
 
 void 
 bjk_init_global(void) {
+	// basic init
 	bjk_set_sync_irq();
 	bj_off_core_pt = 0x0;
-	
-	bj_memset((uint8_t*)&bj_glb_sys, 0, sizeof(bj_glb_sys));
-	
 	bj_init_glb_sys();
 	
+	if(BJK_OFF_CHIP_SHARED_MEM.magic_id != BJ_MAGIC_ID){
+		bjk_abort(0xdeadeb01, 0, 0x0);
+	}
+	
+	// bj_glb_sys init
+	bj_id_t koid = bjk_get_coreid();
+	bj_memset((uint8_t*)&bj_glb_sys, 0, sizeof(bj_glb_sys));
+	bj_glb_sys = BJK_OFF_CHIP_SHARED_MEM.wrk_sys;
+
+	// num_core init
+	bj_consec_t num_core = bj_id_to_nn(koid);
+	bj_off_core_pt = &((BJK_OFF_CHIP_SHARED_MEM.sys_cores)[num_core]);
+	
+	if(bj_off_core_pt->magic_id != BJ_MAGIC_ID){
+		bjk_abort(0xdeadeb02, 0, 0x0);
+	}
+	
+	// bj_in_core_shd init
 	bj_memset((uint8_t*)&bj_in_core_shd, 0, sizeof(bj_in_core_shd));
 	bj_memset((uint8_t*)bjk_dbg_call_stack_trace, 0, sizeof(bjk_dbg_call_stack_trace));
 	
 	bj_in_core_shd.magic_id = BJ_MAGIC_ID;
 	bj_in_core_shd.dbg_stack_trace = bjk_dbg_call_stack_trace;
-	bj_in_core_shd.magic_end = BJ_MAGIC_END;
+	bj_in_core_shd.magic_end = BJ_MAGIC_END;	
+	bj_in_core_shd.the_coreid = koid;
 	
-	bj_in_core_shd.the_coreid = bjk_get_coreid();
-	//bjk_set_coreid();
-	
-	//uint16_t num_core = bj_coreid_to_consec(bj_in_core_shd.the_coreid);
-	bj_off_core_pt = &(sh_mem);
-	
-	set_off_chip_var(bj_off_core_pt->magic_id, BJ_MAGIC_ID);
+	// bj_off_core_pt init	
+	//set_off_chip_var(bj_off_core_pt->magic_id, BJ_MAGIC_ID);
 	set_off_chip_var(bj_off_core_pt->the_coreid, bj_in_core_shd.the_coreid);
 	set_off_chip_var(bj_off_core_pt->core_data, &(bj_in_core_shd));
 	

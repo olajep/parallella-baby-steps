@@ -11,15 +11,8 @@
 extern "C" {
 #endif
 
-//======================================================================
-// off chip shared memory
-
-extern bj_off_core_st sh_mem;
-
 //=====================================================================
 // in ekore shared memory
-
-extern uint8_t __FIRST_PROG_VAR__;
 
 extern void* 	bjk_dbg_call_stack_trace[BJ_MAX_CALL_STACK_SZ];
 
