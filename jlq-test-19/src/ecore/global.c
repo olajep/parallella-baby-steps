@@ -9,10 +9,7 @@ bj_off_sys_st BJK_OFF_CHIP_SHARED_MEM bj_section("shared_dram");
 
 
 //=====================================================================
-// in ekore shared memory
-
-// seems like a bug but this first var does not always gets into .bss
-uint8_t __FIRST_PROG_VAR__ bj_section(".bss");
+// incore memory
 
 void* 	bjk_dbg_call_stack_trace[BJ_MAX_CALL_STACK_SZ];
 
@@ -23,6 +20,8 @@ bj_rrarray_st* bj_write_rrarray;
 bj_in_core_st bj_in_core_shd;
 
 uint16_t bjk_trace_err;
+
+uint8_t bj_out_str[BJ_OUT_BUFF_MAX_OBJ_SZ];
 
 //=====================================================================
 // global funcs
@@ -55,7 +54,7 @@ bjk_init_global(void) {
 	bj_init_glb_sys();
 	
 	if(BJK_OFF_CHIP_SHARED_MEM.magic_id != BJ_MAGIC_ID){
-		bjk_abort(0xdeadeb01, 0, 0x0);
+		bjk_abort((uint32_t)bjk_init_global, 0, 0x0);
 	}
 	
 	// bj_glb_sys init
@@ -68,7 +67,7 @@ bjk_init_global(void) {
 	bj_off_core_pt = &((BJK_OFF_CHIP_SHARED_MEM.sys_cores)[num_core]);
 
 	if((BJK_OFF_CHIP_SHARED_MEM.sys_out_buffs)[num_core].magic_id != BJ_MAGIC_ID){
-		bjk_abort(0xdeadeb02, 0, 0x0);
+		bjk_abort((uint32_t)bjk_init_global, 0, 0x0);
 	}
 
 	bj_core_out_st* out_st = &((BJK_OFF_CHIP_SHARED_MEM.sys_out_buffs)[num_core]);
@@ -76,7 +75,7 @@ bjk_init_global(void) {
 	bj_rr_init(bj_write_rrarray, BJ_OUT_BUFF_SZ, out_st->buff, 0);
 	
 	if(bj_off_core_pt->magic_id != BJ_MAGIC_ID){
-		bjk_abort(0xdeadeb03, 0, 0x0);
+		bjk_abort((uint32_t)bjk_init_global, 0, 0x0);
 	}
 	
 	// bj_in_core_shd init
@@ -100,7 +99,39 @@ bjk_init_global(void) {
 void
 abort(){	// Needed when optimizing for size
 	BJK_CK2(ck2_abort, 0);
-	bjk_abort(0xdead0001, 0, 0x0);
+	bjk_abort((uint32_t)abort, 0, 0x0);
 	while(1);
+}
+
+void
+bjk_slog(char* msg){ 
+	uint16_t oln = bj_strlen(msg);
+	if(oln > (BJ_OUT_BUFF_MAX_OBJ_SZ - 2)){
+		oln = (BJ_OUT_BUFF_MAX_OBJ_SZ - 2);
+	}
+	bj_memcpy(bj_out_str + 2, (uint8_t*)msg, oln);
+	bj_out_str[0] = BJ_OUT_LOG;
+	bj_out_str[1] = BJ_CHR;
+	uint16_t ow = bj_rr_write_obj(bj_write_rrarray, oln + 2, (uint8_t*)bj_out_str);
+	if(ow == 0){
+		bjk_wait_sync(BJ_WAITING_BUFFER, 0, bj_null);
+	}
+}
+
+void
+bjk_aux_ilog(uint32_t vv, bj_type_t tt){
+	uint16_t oln = 2 + sizeof(uint32_t);
+	uint8_t msg[oln];
+	msg[0] = BJ_OUT_LOG;
+	msg[1] = tt;
+	uint8_t* pt = (uint8_t*)(&vv);
+	msg[2] = pt[0];
+	msg[3] = pt[1];
+	msg[4] = pt[2];
+	msg[5] = pt[3];
+	uint16_t ow = bj_rr_write_obj(bj_write_rrarray, oln, (uint8_t*)msg);
+	if(ow == 0){
+		bjk_wait_sync(BJ_WAITING_BUFFER, 0, bj_null);
+	}
 }
 

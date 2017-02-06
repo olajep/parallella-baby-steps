@@ -28,6 +28,7 @@ typedef uint16_t bj_coor_t;
 typedef uint32_t bj_consec_t;
 
 typedef uint32_t bj_addr_t;
+typedef uint32_t bj_size_t;
 
 #define bj_addr_val_in_p16(p16) ((bj_addr_t)(bj_v32_of_p16(p16)))
 
@@ -151,6 +152,14 @@ bj_addr_in_sys(bj_addr_t addr) {
 //======================================================================
 // sane alignment/access functions
 
+#define BJ_IS_ALIGNED_16(ptr) ((((uintptr_t)ptr) & 0x1) == 0)
+#define BJ_IS_ALIGNED_32(ptr) ((((uintptr_t)ptr) & 0x3) == 0)
+#define BJ_IS_ALIGNED_64(ptr) ((((uintptr_t)ptr) & 0x7) == 0)
+//define BJ_IS_ALIGNED(ptr, agn) ((((uintptr_t)ptr) & (agn - 1)) == 0)
+
+bj_opt_sz_fn uint8_t 
+bj_get_aligment(void* ptr);
+
 uint32_t bj_inline_fn
 bj_v32_of_p16(uint16_t* p16){
 	uint32_t v32 = p16[1];
@@ -232,7 +241,7 @@ typedef struct bj_off_core_shared_data_def bj_off_core_st;
 
 
 #define BJ_OUT_BUFF_SZ 	bj_mem_16K
-#define BJ_MAX_OBJ_SZ 500
+#define BJ_OUT_BUFF_MAX_OBJ_SZ 500
 
 struct bj_align(8) bj_core_out_def { 
 	uint32_t 		magic_id;
@@ -252,14 +261,46 @@ struct bj_align(8) bj_off_sys_shared_data_def {
 };
 typedef struct bj_off_sys_shared_data_def bj_off_sys_st;
 
+enum bj_out_obj_type_def {
+	BJ_OUT_LOG,
+	BJ_OUT_PRT,
+	BJ_OUT_MSG
+};
+typedef enum bj_out_obj_type_def bj_out_obj_t;
+
+enum bj_type_def {
+	BJ_CHR,
+	BJ_I8,
+	BJ_I16,
+	BJ_I32,
+	BJ_UI8,
+	BJ_UI16,
+	BJ_UI32,
+	BJ_X8,
+	BJ_X16,
+	BJ_X32
+};
+typedef enum bj_type_def bj_type_t;
+
 int 
 bjh_prt_call_stack(const char *elf_nm, int addrs_sz, void** stack_addrs);
 
-void 
-bj_memset(uint8_t* bytes, uint8_t val, uint32_t sz);
+uint8_t*
+bj_memset(uint8_t* dest, uint8_t val, bj_size_t sz);
+
+uint8_t*
+bj_memcpy(uint8_t* dest, const uint8_t* src, bj_size_t sz);
+
+uint8_t*
+bj_memmove(uint8_t* dest, const uint8_t* src, bj_size_t sz);
 
 uint16_t 
 bj_strlen(char* str) bj_code_dram;
+
+bj_inline_fn bool
+bj_isprint(char cc){
+	return ((cc >= ' ' && cc <= '~') ? true : false);
+}
 
 #ifdef __cplusplus
 }
