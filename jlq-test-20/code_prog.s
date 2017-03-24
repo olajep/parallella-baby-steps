@@ -22,10 +22,49 @@ Disassembly of section loader_cfg:
 00000058 <loader_cfg>:
 	...
 
+Disassembly of section .code_dram:
+
+8e000000 <func1>:
+8e000000:	f55c 2700 	str fp,[sp],-0x2
+8e000004:	f4ef 2402 	mov fp,sp
+8e000008:	000b 0002 	mov r0,0x0
+8e00000c:	000b 18f2 	movt r0,0x8f00
+8e000010:	3a4b 0042 	mov r1,0x4d2
+8e000014:	20d4      	str r1,[r0,0x1]
+8e000016:	01a2      	nop
+8e000018:	000b 0002 	mov r0,0x0
+8e00001c:	000b 18f2 	movt r0,0x8f00
+8e000020:	20c4      	ldr r1,[r0,0x1]
+8e000022:	1a4b 0042 	mov r0,0x4d2
+8e000026:	443a      	sub r2,r1,r0
+8e000028:	f810      	bne 8e000018 <func1+0x18>
+8e00002a:	01a2      	nop
+8e00002c:	f54c 2400 	ldr fp,[sp,+0x2]
+8e000030:	b41b 2401 	add sp,sp,8
+8e000034:	194f 0402 	rts
+
+8e000038 <func2>:
+8e000038:	f55c 2700 	str fp,[sp],-0x2
+8e00003c:	f4ef 2402 	mov fp,sp
+8e000040:	000b 0002 	mov r0,0x0
+8e000044:	000b 18f2 	movt r0,0x8f00
+8e000048:	25cb 0162 	mov r1,0x162e
+8e00004c:	2154      	str r1,[r0,0x2]
+8e00004e:	01a2      	nop
+8e000050:	000b 0002 	mov r0,0x0
+8e000054:	000b 18f2 	movt r0,0x8f00
+8e000058:	2144      	ldr r1,[r0,0x2]
+8e00005a:	05cb 0162 	mov r0,0x162e
+8e00005e:	443a      	sub r2,r1,r0
+8e000060:	f810      	bne 8e000050 <func2+0x18>
+8e000062:	01a2      	nop
+8e000064:	f54c 2400 	ldr fp,[sp,+0x2]
+8e000068:	b41b 2401 	add sp,sp,8
+8e00006c:	194f 0402 	rts
+
 Disassembly of section .shared_dram:
 
-8f000000 <the_core_id>:
-8f000000:	0000      	beq 8f000000 <the_core_id>
+8f000000 <SHD_DATA>:
 	...
 
 Disassembly of section .text:
@@ -55,16 +94,22 @@ Disassembly of section .text:
  13a:	01a2      	nop
 
 0000013c <main>:
- 13c:	f55c 2700 	str fp,[sp],-0x2
- 140:	f4ef 2402 	mov fp,sp
+ 13c:	d4fc 2700 	strd lr,[sp],-0x1
+ 140:	f41b 2401 	add fp,sp,8
  144:	251f 0032 	movfs r1,coreid
  148:	000b 0002 	mov r0,0x0
  14c:	000b 18f2 	movt r0,0x8f00
  150:	2054      	str r1,[r0]
- 152:	0003      	mov r0,0x0
- 154:	f54c 2400 	ldr fp,[sp,+0x2]
- 158:	b41b 2401 	add sp,sp,8
- 15c:	194f 0402 	rts
+ 152:	000b 0002 	mov r0,0x0
+ 156:	000b 18e2 	movt r0,0x8e00
+ 15a:	0152      	jalr r0
+ 15c:	070b 0002 	mov r0,0x38
+ 160:	000b 18e2 	movt r0,0x8e00
+ 164:	0152      	jalr r0
+ 166:	0003      	mov r0,0x0
+ 168:	d4ec 2400 	ldrd lr,[sp,+0x1]
+ 16c:	b41b 2401 	add sp,sp,8
+ 170:	194f 0402 	rts
 
 Disassembly of section .comment:
 

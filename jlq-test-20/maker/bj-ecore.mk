@@ -26,6 +26,7 @@ SRC_INCDIRS := $(SRC_DIR)
 
 SOURCES := \
 	$(SRC_DIR)/core_start.s \
-	$(SRC_DIR)/core_prog.c 
+	$(SRC_DIR)/core_prog.c \
+	$(SRC_DIR)/func2.c 
 
 

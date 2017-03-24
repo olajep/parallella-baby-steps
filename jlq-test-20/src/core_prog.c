@@ -1,12 +1,19 @@
 
 #include "e_lib.h"
 
-e_coreid_t the_core_id SECTION("shared_dram");
+#include "shared.h"
+
+shd_dat_t SHD_DATA SECTION("shared_dram");
+
+void func1() bj_code_dram;
+void func1(){
+	bj_set_off_chip_var(SHD_DATA.func_1, 1234);
+}
 
 int main(void) {
-	//the_core_id = 0xaabb;
-	//the_core_id = e_get_coreid();
-	__asm__ __volatile__ ("movfs %0, coreid" : "=r" (the_core_id));
+	bj_asm("movfs %0, coreid" : "=r" (SHD_DATA.my_core_id));
+	func1();
+	func2();
 	return 0;
 }
 

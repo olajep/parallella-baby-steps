@@ -2,4 +2,4 @@
 
 cd bin
 
-./host_prog.elf
+./host_prog.elf core_prog.elf

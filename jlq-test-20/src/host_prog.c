@@ -9,8 +9,8 @@
 #include <e-hal.h>
 #include <e-loader.h>
 
-#define f_nm_sz   1024
-#define buff_sz   (4096)
+#include "shared.h"
+
 #define buff_offset (0x01000000)
 
 int main(int argc, char *argv[])
@@ -19,11 +19,15 @@ int main(int argc, char *argv[])
 	e_platform_t platform;
 	e_epiphany_t dev;
 	e_mem_t emem;
-	char emsg[buff_sz];
-	char f_nm[f_nm_sz];
-	
-	e_coreid_t the_coreid;
-	
+
+	if(argc < 2){
+		printf("args: <core_code_elf> \n");
+		return 0;
+	}
+
+	char* core_file_nm = argv[1];
+	printf("RUNNING %s \n", core_file_nm);
+
 	e_set_host_verbosity(H_D0);
 
 	// initialize system, read platform params from
@@ -35,7 +39,7 @@ int main(int argc, char *argv[])
 
 	// Allocate a buffer in shared external memory
 	// for message passing from eCore to host.
-	e_alloc(&emem, buff_offset, buff_sz);	
+	e_alloc(&emem, buff_offset, sizeof(shd_dat_t));	
 	
     	// Open a workgroup
 	e_open(&dev, 0, 0, platform.rows, platform.cols);
@@ -44,13 +48,20 @@ int main(int argc, char *argv[])
 	e_reset_group(&dev);
 
 	// Load the device program onto all the eCores
-	e_load_group("core_prog.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
+	e_load_group(core_file_nm, &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 
-	for (row=0; row<platform.rows; row++){
-		for (col=0; col<platform.cols; col++){
+	shd_dat_t* SHD_DATA = (shd_dat_t*)(emem.base);
+
+	int max_row, max_col;
+	max_row = 1;
+	max_col = 1;
+	max_row = platform.rows;
+	max_col = platform.cols;
+
+	for (row=0; row<max_row; row++){
+		for (col=0; col<max_col; col++){
 			// clear shared buffer.
-			memset(emsg, 0, buff_sz);
-			e_write(&emem, 0, 0, 0x0000, emsg, buff_sz);
+			memset(SHD_DATA, 0, sizeof(SHD_DATA));
 
 			// Print working core 
 			coreid = (row + platform.row) * 64 + col + platform.col;
@@ -63,12 +74,9 @@ int main(int argc, char *argv[])
 			usleep(10000);
 
 			// Read message from shared buffer
-			the_coreid = 0;
-			e_read(&emem, 0, 0, 0x0, &the_coreid, sizeof(the_coreid));
-			sprintf(emsg, "Hello World from core 0x%03x! \n", the_coreid);
-
-			// Print the message and close the workgroup.
-			printf("%s\n", emsg);			
+			printf("core_id=0x%03x \n", SHD_DATA->my_core_id);
+			printf("func_1=%ld \n", SHD_DATA->func_1);
+			printf("func_2=%ld \n\n", SHD_DATA->func_2);
 		}
 	}
 	
