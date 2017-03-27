@@ -1,32 +1,86 @@
 
-E_LIBS_1=${ETOOLS}/e-gnu/epiphany-elf/lib
-E_LIBS_2=${ETOOLS}/e-gnu/lib/gcc/epiphany-elf/5.4.0/
+IS_CORE_FLAG := -DIS_CORE_CODE
+
+# DIR_ELIBS_1=${ETOOLS}/e-gnu/epiphany-elf/lib
+DIR_ELIBS_1 := 
+# DIR_ELIBS_2=${ETOOLS}/e-gnu/lib/gcc/epiphany-elf/5.4.0/
+DIR_ELIBS_2 := 
 
 E_LDF=bj-ld-script.ldf
 # ELDF=${ESDK}/bsps/current/fast.ldf
 
+SRC_ECORE_DIR := $(SRC_DIR)/ecore
+
+DBG_FLAG := -DFULL_DEBUG
+# DBG_FLAG := 
+
+# OPTSZ_FLAG := -Os # DOES NOT WORK WITH e-gcc ???? BAD GENERATED CODE ????
+OPTSZ_FLAG := 
+
+# STDLIBS := -lc -lepiphany -lgcc -lg 
+STDLIBS := 
+
+# ELIBS := -le-lib 
+ELIBS :=
+
+#SRC_IN_SECTIONS := -fdata-sections -ffunction-sections
+SRC_IN_SECTIONS := 
+
+#LD_IN_SECTIONS := --gc-sections
+LD_IN_SECTIONS := 
+
 # =======================================
 
-TARGET := core_prog.elf
+TARGET := bj-core-actor.elf
 
-TGT_LDFLAGS := -T ${E_LDF} -L${E_LIBS_1} -L${E_LIBS_2} --strip-debug 
+LD_FLAGS_1 := -static
+TGT_LDFLAGS := -T ${E_LDF} -L${DIR_ELIBS_1} -L${DIR_ELIBS_2} --strip-debug ${LD_IN_SECTIONS} ${LD_FLAGS_1}
 
-TGT_LDLIBS  := -le-lib 
+TGT_LDLIBS  := ${STDLIBS} ${ELIBS}
 
-TGT_POSTMAKE := echo "Finished building "$(TARGET)
+TGT_POSTMAKE := printf "====================================\nFinished building "$(TARGET)"\n\n\n"
 
 TGT_CC := e-gcc
 
+TGT_CXX := e-g++
+
 TGT_LINKER := e-ld
 
-# SRC_CFLAGS := -Wall -std=c11 -nostdlib -nostartfiles
-SRC_CFLAGS := -Wall -nostdlib -nostartfiles
+# -Wall -std=c11 -nostdlib -nostartfiles
+C_FLAGS_1 := -ffreestanding -Wall -std=gnu11 -nostdlib -nostartfiles -fno-default-inline ${SRC_IN_SECTIONS}
+SRC_CFLAGS := ${IS_CORE_FLAG} ${OPTSZ_FLAG} ${DBG_FLAG} ${C_FLAGS_1}
 
-SRC_INCDIRS := $(SRC_DIR)
+# -std=c++11 -nostdlib -fno-exceptions -fno-unwind-tables -fno-rtti -Os
+CXX_FLAGS_1 := -Wall -std=c++14 -nostdlib -fno-exceptions -fno-unwind-tables ${SRC_IN_SECTIONS}
+CXX_FLAGS_2 := -fno-rtti -fno-default-inline -fno-threadsafe-statics -fno-elide-constructors
+SRC_CXXFLAGS := ${IS_CORE_FLAG} ${OPTSZ_FLAG} ${DBG_FLAG} ${CXX_FLAGS_1} ${CXX_FLAGS_2}
+
+SRC_INCDIRS := $(SRC_ECORE_DIR) 
+
+#	$(SRC_ECORE_DIR)/test_logs.c \
+#	$(SRC_ECORE_DIR)/umm_malloc.c \
+#	$(SRC_ECORE_DIR)/log.c \
+#	$(SRC_ECORE_DIR)/dyn_mem.cpp \
+#	$(SRC_ECORE_DIR)/actor.cpp \
+#	$(SRC_ECORE_DIR)/std2.c \
 
 SOURCES := \
-	$(SRC_DIR)/core_start.s \
-	$(SRC_DIR)/core_prog.c \
-	$(SRC_DIR)/func2.c 
+	$(SRC_ECORE_DIR)/interruptions.c \
+	$(SRC_ECORE_DIR)/umm_malloc.c \
+	$(SRC_ECORE_DIR)/umm_malloc_eph.c \
+	$(SRC_ECORE_DIR)/log.c \
+	$(SRC_ECORE_DIR)/shared.c \
+	$(SRC_ECORE_DIR)/global.c \
+	$(SRC_ECORE_DIR)/global_eph.c \
+	$(SRC_ECORE_DIR)/rr_array.c \
+	$(SRC_ECORE_DIR)/trace_eph.c \
+	$(SRC_ECORE_DIR)/call_core_main_eph.c \
+	$(SRC_ECORE_DIR)/e_start.s \
+	$(SRC_ECORE_DIR)/dyn_mem.cpp \
+	$(SRC_ECORE_DIR)/binder.cpp \
+	$(SRC_ECORE_DIR)/actor_eph.cpp \
+	$(SRC_ECORE_DIR)/actor.cpp \
+	$(SRC_ECORE_DIR)/test_logs.c \
+	$(SRC_ECORE_DIR)/a_shd_code_error.cpp
 
 
