@@ -108,7 +108,8 @@ uint8_t* BJL_BASE_PT = bj_null;
 void
 bj_ck_memload(uint8_t* dst, uint8_t* src, size_t sz){
 	bool ok = true;
-	for(long aa = 0; aa < sz; aa++){
+	long aa;
+	for(aa = 0; aa < sz; aa++){
 		if(dst[aa] != src[aa]){
 			ok = false;
 			break;
@@ -159,7 +160,8 @@ print_platform_segs(e_platform_t* plat){
 	int num = plat->num_emems;
 	e_memseg_t *all_seg = plat->emem;
 	printf("PLATAFORM NUM SEGMENTS=%d \n", num);
-	for(int aa = 0; aa < num; aa++){
+	int aa;
+	for(aa = 0; aa < num; aa++){
 		printf("objtype=%d phy_base=%lu ephy_base=%lu size=%u type=%d \n", 
 			all_seg[aa].objtype, all_seg[aa].phy_base, all_seg[aa].ephy_base, all_seg[aa].size, all_seg[aa].type);
 	}
