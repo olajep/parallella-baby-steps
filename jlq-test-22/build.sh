@@ -34,9 +34,9 @@ esac
 fi
 
 # Build HOST side application
-${CROSS_COMPILE}gcc -Wall -c core_loader_znq.c ${EINCS} ${ELIBS} 
-${CROSS_COMPILE}gcc -Wall -c dev_test.c ${EINCS} ${ELIBS} 
-${CROSS_COMPILE}gcc -o dev_test.elf dev_test.o core_loader_znq.o ${ELIBS} -le-hal -le-loader -lpthread
+${CROSS_COMPILE}gcc -O3 -g3 -Wall -c core_loader_znq.c ${EINCS} ${ELIBS} 
+${CROSS_COMPILE}gcc -O3 -g3 -Wall -c dev_test.c ${EINCS} ${ELIBS} 
+${CROSS_COMPILE}gcc -O3 -g3 -o dev_test.elf dev_test.o core_loader_znq.o e-loader.c ${EINCS} ${ELIBS} -le-hal -le-loader -lpthread
 
 
 

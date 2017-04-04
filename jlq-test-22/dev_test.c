@@ -8,9 +8,15 @@
 #include <unistd.h>
 
 #include <e-hal.h>
+#include <e-loader.h>
 
 #include "shared.h"
 #include "core_loader_znq.h"
+
+int my_e_load_group(const char *executable, e_epiphany_t *dev,
+				 unsigned row, unsigned col,
+				 unsigned rows, unsigned cols,
+				 e_bool_t start);
 
 void 
 bjh_abort_func(long val, const char* msg){
@@ -45,7 +51,8 @@ int main(int argc, char *argv[])
 	e_reset_group(&dev);
 
 	// Load the device program onto all the eCores
-	bj_load_group("an_epiphany_exe.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
+	my_e_load_group("an_epiphany_exe.elf", &dev, 0, 0, 1, 1, E_FALSE);
+	//bj_load_group("an_epiphany_exe.elf", &dev, 0, 0, platform.rows, platform.cols, E_FALSE);
 
 	// Close the workgroup
 	e_close(&dev);
